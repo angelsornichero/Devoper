@@ -1,0 +1,1 @@
+const greeding: string = 'Hello world'
