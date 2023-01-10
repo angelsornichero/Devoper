@@ -1,5 +1,34 @@
 import { Schema, model } from "mongoose";
 
+const commentsSchema = new Schema({
+    comment: {
+        type: String, 
+        required: true, 
+        trim: true
+    }, 
+    userId: {
+        type: Schema.Types.ObjectId, 
+        required: true, 
+        trim:  true, 
+        ref: 'users'
+    }
+}, {
+    timestamps: true,
+    versionKey: false
+})
+
+const likeSchema = new Schema({
+    userId: {
+        type: Schema.Types.ObjectId, 
+        required: true, 
+        trim:  true, 
+        ref: 'users'
+    }
+}, {
+    timestamps: true,
+    versionKey: false
+})
+
 const videoSchema = new Schema({
     title: {
         type: String,
@@ -21,7 +50,9 @@ const videoSchema = new Schema({
         required: true,
         trim: true,
         ref: 'users'
-    }
+    },
+    comments: [commentsSchema],
+    likes: [likeSchema]
 }, {
     timestamps: true,
     versionKey: false
