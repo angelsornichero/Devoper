@@ -8,7 +8,7 @@ import { giveOneUser } from "./whatUser.js";
 export const getVideos: RequestHandler = async (req, res) => {
     const videos = await Video.find()
     if (!videos) error({statusCode: 404, message: 'Any video founded'}, res)
-    res.json({success: true, videos: `[*] ${videos}`})
+    res.json({success: true, videos: videos})
 }
 
 export const createVideo: RequestHandler = async (req, res) => {
