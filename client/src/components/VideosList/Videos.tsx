@@ -1,38 +1,30 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios'
+import { getVideos } from '../../services/VideoService'
+import { Video } from '../../types/Video.type'
+import { VideoComponent } from './Video'
 
-interface Video {
-  title: string,
-  url: string,
-  description: string,
-  createdAt: string,
-  _id: string,
-  updatedAt: string,
-  comments: Array<any>,
-  likes: Array<any>
-}
 
 export default  function Videos() {
   const [videos, setVideos] = useState<Video[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-  const getVideos = async () => {
-    const { data } = await axios.get(import.meta.env.VITE_API_URL + '/videos')
-    console.log(data)
-    setVideos(data.videos)
-    setLoading(false)
+  
+  const loadVideos = async () => {
+    const videosFounded = await getVideos()
+    console.log(videosFounded)
+    setVideos(videosFounded.videos)
   }
+
   useEffect(() => {
-    getVideos()
+    loadVideos()
+    setLoading(false)
   }, [])
+
   return (
-    <div>
-      {loading ? <h1>Loading</h1> : videos.map(({title, url, _id}) => {
+    <div className=''>
+      {loading ? <h1>Loading</h1> : videos.map((video) => {
         return (
-          <div key={_id}>
-            <h1>
-              {title}
-            </h1>
-            <span>{url}</span>
+          <div className='flex flex-wrap m-20 justify-around' key={video._id}>
+            <VideoComponent video={video} />
           </div>
         )
       })}
