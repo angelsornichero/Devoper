@@ -11,7 +11,7 @@ export const VideoComponent = ({video}: Prop) => {
       <div>
         
       </div>
-      <div>
+      <div className='m-2'>
         <h1 className='text-xl' >
           {video.title}
         </h1>

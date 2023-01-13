@@ -5,6 +5,10 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",],
   theme: {
     extend: {},
+    fontFamily: {
+      'body': ['Sofia Sans','Source Code Pro'],
+      'display': ['Exo 2']
+    }
   },
   plugins: [],
 }
