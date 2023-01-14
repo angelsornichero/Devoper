@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import * as jose from 'jose'
 import { FaMoon } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 
 export default function Navbar() {
   const [jwt, setJwt] = useState<boolean>(false)
@@ -13,6 +14,7 @@ export default function Navbar() {
     try { 
       const verifyJWT = await jose.jwtVerify(cookie, new TextEncoder().encode(import.meta.env.VITE_SECRET_JWT as string))
       if (!verifyJWT) setJwt(false)
+      console.log(verifyJWT)
       setJwt(true)
     }
     catch {
@@ -33,26 +35,33 @@ export default function Navbar() {
     const button1 = window.document.querySelector('#nav-button-1')
 
     if (mode === false && root !== null && icon !== null && nav !== null && button && button1) {
-      root.classList.remove('bg-black'); root.classList.add('bg-white')
+      root.classList.remove('bg-gray-700'); root.classList.add('bg-white')
       nav.classList.remove('bg-blue-700'); nav.classList.add('bg-blue-200'); nav.classList.remove('text-white'); nav.classList.add('text-black')
-      icon.classList.remove('text-white'); icon.classList.add('text-black')
+      icon.classList.remove('text-grey-400'); icon.classList.add('text-black')
       button.classList.remove('bg-green-600'); button.classList.add('bg-green-300')
       button1.classList.remove('bg-green-600'); button1.classList.add('bg-green-300')
 
     }
     
     if (mode === true && root !== null && icon !== null && nav !== null && button && button1) {
-      root.classList.remove('bg-white'); root.classList.add('bg-black')
+      root.classList.remove('bg-white'); root.classList.add('bg-gray-700')
       nav.classList.remove('bg-blue-200'); nav.classList.add('bg-blue-700'); nav.classList.remove('text-black'); nav.classList.add('text-white')
-      icon.classList.remove('text-black'); icon.classList.add('text-white')
+      icon.classList.remove('text-black'); icon.classList.add('text-grey-400')
       button.classList.remove('bg-green-300'); button.classList.add('bg-green-600')
       button1.classList.remove('bg-green-300'); button1.classList.add('bg-green-600')
+      toast('Theme changed to darkmode', {
+        position: "top-right",
+        autoClose: 1000,
+        theme: "light",
+        });
     }
+    
   }, [mode])
   
   const handleLogout = () => {
     removeCookie('sessionJWT')
     setJwt(false)
+    toast.success('User correctly logout')
   }
 
   
