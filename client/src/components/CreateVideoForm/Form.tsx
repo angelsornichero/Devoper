@@ -7,6 +7,7 @@ import {toast} from 'react-toastify'
 
 export const Form = () => {
     const [jwt, setJwt] = useState<string>('')
+    const [error, setError] = useState<string>('')
     const [cookies, setCookies, removeCookie] = useCookies(['sessionJWT'])
     const [video, setVideo] = useState<Video>({title: '', url: '', description: ''})
     const verifyToken = async (cookie: any) => {
@@ -31,6 +32,9 @@ export const Form = () => {
 
     const handleNewVideo = async (e: any) => {
         e.preventDefault()
+
+        if (video.url.includes('https://www.youtube.com/watch?v=') === false) return setError('[!] You must put an url of youtube') 
+
         try {
             const data = await createVideo(video, jwt)
             toast.success('Video created successfully')
@@ -44,6 +48,7 @@ export const Form = () => {
 
     return (
         <div className='mt-20 rounded-lg bg-slate-200'>
+            {error === '' ? <div></div> : <div className='bg-red-600 text-xl rounded-lg'><h1 className='p-4'>{error}</h1></div>}
             <form className='text-center p-12'>
                 <span className='text-4xl'>Create a new video</span>
                 <div className='m-6 flex justify-center'>

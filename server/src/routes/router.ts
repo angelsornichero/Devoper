@@ -12,6 +12,8 @@ router.get('/videos', crtlVideo.getVideos)
 router.get('/videos/:id', crtlVideo.getVideo)
 router.get('/comments/:id', crtlComment.getComments)
 router.get('/likes/:id', crtlLike.getLikes)
+router.get('/user/:id', crtlUser.getUserById)
+router.get('/video/user/', crtlVideo.getVideosByUserId)
 // Post
 router.post('/comment/create/:id', isAuthenticated, crtlComment.createComment)
 router.post('/video/create', isAuthenticated, crtlVideo.createVideo)

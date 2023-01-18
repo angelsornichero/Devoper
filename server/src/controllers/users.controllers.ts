@@ -49,3 +49,13 @@ export const loginUser: RequestHandler = async (req, res) => {
 
     res.json({success: true, message: '[*] User correctly loged', token: createJWT})
 }
+
+export const getUserById: RequestHandler = async (req, res) => {
+    const userId = req.params.id
+
+    const findUser = await User.findById(userId)
+
+    if (!findUser) return error({statusCode: 404, message: 'User not found'}, res)
+
+    res.json({success: true, username: findUser.username})
+}

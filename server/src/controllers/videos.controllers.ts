@@ -10,6 +10,20 @@ export const getVideos: RequestHandler = async (req, res) => {
     if (!videos) error({statusCode: 404, message: 'Any video founded'}, res)
     res.json({success: true, videos: videos})
 }
+export const getVideosByUserId: RequestHandler = async (req, res) => {
+    const videos = await Video.find()
+    const recuperateUser = giveOneUser(req) 
+    const findUser = await User.findOne({username: recuperateUser.username})
+    let videoToReturn: Array<any> = []
+    
+    if (!findUser) return error({statusCode: 401, message: 'User not found'}, res)
+
+    videos.forEach(video => {
+        if (video.userId.toString() === findUser._id.toString()) videoToReturn.push(video)
+    })
+    if (!videoToReturn) error({statusCode: 404, message: 'Any video founded'}, res)
+    res.json({success: true, videos: videoToReturn})
+}
 
 export const createVideo: RequestHandler = async (req, res) => {
     const videoFound = await Video.findOne({url: req.body.url})
