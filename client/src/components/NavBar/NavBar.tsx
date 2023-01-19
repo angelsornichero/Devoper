@@ -29,6 +29,7 @@ export default function Navbar() {
     console.log(cookie, verifyToken(cookie))
     
   }, [jwt])
+  /*
   useEffect(() => {
     const root = window.document.querySelector('body')
     const icon = window.document.querySelector('#icon')
@@ -62,7 +63,7 @@ export default function Navbar() {
     }
     
   }, [mode])
-  
+  */
   const handleLogout = () => {
     removeCookie('sessionJWT')
     setJwt(false)
@@ -113,13 +114,6 @@ export default function Navbar() {
                 </li>
                 <li className='text-xl pt-2.5 font-display'>
                   <button id='nav-button' onClick={handleLogout} className='bg-green-300 rounded-lg p-4 '>Logout</button>
-                </li>
-                <li className='text-xl pt-2.5 font-display'>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input onChange={() => {setMode(!mode); console.log('change')}} type="checkbox" value="" className="sr-only peer" />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute pt-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-slate-200"></div>
-                    <span className="ml-3 text-5xl font-medium  dark:text-gray-300"><FaMoon id='icon' className='text-black' /></span>
-                  </label>
                 </li>
               </ul>
             

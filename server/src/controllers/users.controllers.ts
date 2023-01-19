@@ -29,8 +29,9 @@ export const registerUser: RequestHandler = async (req, res) => {
     catch {
         error({statusCode: 400, message: 'Error on register the User'}, res)
     }
+    const findUser = await User.findOne({username})
 
-    const createJWT = jwt.sign({username}, process.env.JWT_SECRET as string) 
+    const createJWT = jwt.sign({username, id: findUser?._id}, process.env.JWT_SECRET as string) 
 
     res.json({success: true, message: '[*] User correctly created', token: createJWT})
 
@@ -45,7 +46,7 @@ export const loginUser: RequestHandler = async (req, res) => {
     const comparePasswords = bcrypt.compareSync(password, findUser.encryptPassword as string)
     if (comparePasswords === false) return error({statusCode: 401, message: "Password is incorrect"}, res)
 
-    const createJWT = jwt.sign({username}, process.env.JWT_SECRET as string) 
+    const createJWT = jwt.sign({username, id: findUser._id}, process.env.JWT_SECRET as string) 
 
     res.json({success: true, message: '[*] User correctly loged', token: createJWT})
 }

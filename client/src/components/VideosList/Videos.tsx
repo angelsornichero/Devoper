@@ -24,7 +24,7 @@ export default  function Videos() {
       {loading ? <h1>Loading</h1> : videos.map((video) => {
         return (
           <div className='flex flex-wrap m-20 justify-around' key={video._id}>
-            <VideoComponent video={video} />
+            <VideoComponent dashboard={false} video={video} />
           </div>
         )
       })}

@@ -23,7 +23,7 @@ router.post('/like/create/:id', isAuthenticated, crtlLike.createLikes)
 // Delete
 router.delete('/video/delete/:id', isAuthenticated, crtlVideo.deleteVideo)
 router.delete('/comment/delete/:id', isAuthenticated, crtlComment.deleteComments)
-router.delete('/like/delete/:id', isAuthenticated, crtlLike.deleteLike)
+router.post('/like/delete/:id', isAuthenticated, crtlLike.deleteLike)
 // Put
 router.put('/video/update/:id', isAuthenticated, crtlVideo.updateVideo)
 
