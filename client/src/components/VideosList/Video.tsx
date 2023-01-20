@@ -82,7 +82,7 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
     }
 
     return (
-      <div className='bg-slate-300 rounded-lg shadow-xl max-w-[696px] shadow-gray-700'>
+      <div className='bg-blue-400 rounded-lg shadow-xl text-black max-w-[696px] shadow-gray-600'>
         <div className='m-2 p-5'>
           <ReactPlayer className='rounded-lg' url={video.url} />
         </div>
@@ -95,6 +95,9 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
           <div className='flex justify-center gap-4'>
             <button onClick={handleLike}><AiFillHeart id={`like${video._id}`} className='cursor-pointer text-4xl' /></button>
             <span className='text-3xl'>{video.likes?.length}</span>
+          </div>
+          <div className='flex justify-center gap-4'>
+            <span className='text-3xl'>Comments: {video.comments?.length}</span>
           </div>
           
         </div>

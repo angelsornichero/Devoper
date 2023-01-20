@@ -44,7 +44,7 @@ export const UserDashboard = () => {
   return (
     <div>
         <div className='border-2 border-blue-400 rounded-xl text-center m-10'>
-            <h1 className='p-4 text-6xl font-bold' >Control Your Videos</h1>
+            <h1 className='p-4 text-6xl text-white font-bold' >Control Your Videos</h1>
         </div>
         <div className='flex justify-around flex-wrap'>
             {videos.map((video) => {

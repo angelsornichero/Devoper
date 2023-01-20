@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import * as jose from 'jose'
-import { FaMoon } from 'react-icons/fa'
+import { FaUserCircle } from 'react-icons/fa'
+import { BiChevronDown } from 'react-icons/bi'
 import { toast } from 'react-toastify'
 
 export default function Navbar() {
   const [jwt, setJwt] = useState<boolean>(false)
   const [cookies, setCookies, removeCookie] = useCookies(['sessionJWT'])
-  const [mode, setMode] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false)
 
   const verifyToken = async (cookie: any) => {
     try { 
@@ -26,54 +27,33 @@ export default function Navbar() {
   useEffect(() => {
     const cookie = cookies.sessionJWT
     verifyToken(cookie)
-    console.log(cookie, verifyToken(cookie))
+    console.log(cookie)
     
-  }, [jwt])
-  /*
-  useEffect(() => {
-    const root = window.document.querySelector('body')
-    const icon = window.document.querySelector('#icon')
-    const nav = window.document.querySelector('header')
-    const button = window.document.querySelector('#nav-button')
-    const button1 = window.document.querySelector('#nav-button-1')
-    const button2 = window.document.querySelector('#nav-button-2')
+  })
 
-    if (mode === false && root !== null && icon !== null && nav !== null && button && button1 && button2) {
-      root.classList.remove('bg-gray-700'); root.classList.add('bg-white')
-      nav.classList.remove('bg-blue-700'); nav.classList.add('bg-blue-200'); nav.classList.remove('text-white'); nav.classList.add('text-black')
-      icon.classList.remove('text-grey-400'); icon.classList.add('text-black')
-      button.classList.remove('bg-green-600'); button.classList.add('bg-green-300')
-      button1.classList.remove('bg-green-600'); button1.classList.add('bg-green-300')
-      button2.classList.remove('bg-green-600'); button2.classList.add('bg-green-300')
-
-    }
-    
-    if (mode === true && root !== null && icon !== null && nav !== null && button && button1 && button2) {
-      root.classList.remove('bg-white'); root.classList.add('bg-gray-700')
-      nav.classList.remove('bg-blue-200'); nav.classList.add('bg-blue-700'); nav.classList.remove('text-black'); nav.classList.add('text-white')
-      icon.classList.remove('text-black'); icon.classList.add('text-grey-400')
-      button.classList.remove('bg-green-300'); button.classList.add('bg-green-600')
-      button1.classList.remove('bg-green-300'); button1.classList.add('bg-green-600')
-      button2.classList.remove('bg-green-300'); button2.classList.add('bg-green-600')
-      toast('Theme changed to darkmode', {
-        position: "top-right",
-        autoClose: 1000,
-        theme: "light",
-        });
-    }
-    
-  }, [mode])
-  */
   const handleLogout = () => {
     removeCookie('sessionJWT')
     setJwt(false)
     toast.success('User correctly logout')
+    window.location.reload()
   }
 
-  
+  const handleModal = () => {
+    const modal = document.querySelector('#modal')
+    if (open === false) {
+        modal?.classList.remove('hidden')
+        modal?.classList.add('flex')
+        return setOpen(true)
+    }
+    if (open === true) {
+      modal?.classList.remove('flex')
+      modal?.classList.add('hidden')
+      return setOpen(false)
+    }
+  }
 
   return (
-    <header className='w-full h-20 bg-blue-200 text-black'>
+    <header className='w-full h-20 bg-green-700 text-white'>
       <nav className='flex justify-between'>
         <ul className='ml-10 flex flex-nowrap gap-6'>
           <li className='text-5xl font-body p-3'>
@@ -87,43 +67,42 @@ export default function Navbar() {
           jwt === false 
           
           ? (
-              <ul className='mr-10 flex flex-nowrap gap-6'>
+              <ul className='flex flex-nowrap gap-6'>
                 <li className='text-xl pt-6 font-display'>
-                  <Link className='bg-green-300 p-4 rounded-lg' to={'/register'}>Register now!</Link>
+                  <Link className='bg-gray-800 p-4 rounded-lg' to={'/register'}>Register now!</Link>
                 </li>
-                <li className='text-xl pt-6 font-display'>
-                  <Link className='bg-green-300 rounded-lg p-4' to={'/login'}>Login</Link>
-                </li>
-                <li className='text-xl pt-2.5 font-display'>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                      <input onChange={() => {setMode(!mode); console.log('change')}} type="checkbox" value="" className="sr-only peer" />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute pt-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-slate-200"></div>
-                      <span className="ml-3 text-5xl font-medium  dark:text-gray-300"><FaMoon id='icon' className='text-black' /></span>
-                  </label>
+                <li className='text-xl pt-6 font-display mr-4'>
+                  <Link className='bg-gray-800 rounded-lg p-4' to={'/login'}>Login</Link>
                 </li>
             </ul>
             )
           
           : (
-              <ul className='mr-10 flex flex-nowrap gap-6'>
+              <ul className='flex flex-nowrap gap-6'>
                 <li className='text-xl pt-6 font-display'>
-                  <Link id='nav-button-1' className='bg-green-300 p-4 rounded-lg' to={'/create-video'}>Create New Video!</Link>
+                  <Link id='nav-button-1' className='bg-gray-800 p-4 rounded-lg' to={'/create-video'}>Create New Video!</Link>
                 </li>
-                <li className='text-xl pt-6 font-display'>
-                  <Link id='nav-button-2' className='bg-green-300 p-4 rounded-lg' to={'/dashboard'}>Your videos!</Link>
-                </li>
-                <li className='text-xl pt-2.5 font-display'>
-                  <button id='nav-button' onClick={handleLogout} className='bg-green-300 rounded-lg p-4 '>Logout</button>
+                <li onClick={handleModal} className='flex mr-2 justify-between text-6xl pt-2 font-display cursor-pointer'>
+                  <div className='flex justify-between'>
+                    <FaUserCircle className='text-gray-800' /> 
+                    <BiChevronDown className='text-5xl pt-2 text-gray-800' />
+                  </div>
                 </li>
               </ul>
-            
           )
         }
-        
-
-        
-        
+          
       </nav>
+      <div id='modal' className='hidden justify-end'>
+        <ul className='bg-gray-900 mr-3 rounded-lg '>
+          <li className='text-xl p-6 font-display border-b-2'>
+            <Link id='nav-button-2' className='text-white  cursor-pointer' to={'/dashboard'}>Your videos!</Link>
+          </li>
+          <li className='text-xl p-6 font-display border-b-2'>
+            <button id='nav-button' onClick={handleLogout} className='text-white cursor-pointer '>Logout</button>
+          </li>
+        </ul>
+      </div> 
     </header>
     
   )
