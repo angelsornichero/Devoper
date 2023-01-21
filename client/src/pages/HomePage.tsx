@@ -1,5 +1,5 @@
 import React from 'react'
-import Videos from '../components/VideosList/Videos.js'
+import Videos from '../components/Videos/Videos.js'
 
 
 const HomePage = () => {

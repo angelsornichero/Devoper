@@ -51,7 +51,7 @@ export const getVideo: RequestHandler = async (req, res) => {
     try {
         const videoFound = await Video.findById(req.params.id)
         if (!videoFound) return error({statusCode: 204, message: `Any video with id: ${req.params.id} found`}, res)
-        res.json({ success: true, video: `[*] ${videoFound}` })
+        res.json({ success: true, video: videoFound })
     } catch {
         error({statusCode: 404, message: 'No videos with that id'}, res)
     }

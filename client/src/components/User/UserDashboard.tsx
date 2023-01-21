@@ -3,7 +3,7 @@ import * as jose from 'jose'
 import { useCookies } from 'react-cookie'
 import { getVideosByUser } from '../../services/VideoService'
 import { Video } from '../../types/Video.type'
-import { VideoComponent } from '../VideosList/Video'
+import { VideoComponent } from '../Videos/Video'
 
 export const UserDashboard = () => {
   const [jwt, setJwt] = useState<string>('')

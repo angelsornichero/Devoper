@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import { UserVideosPage } from './pages/UserVideosPage'
 import { VideoFormPage } from './pages/VideoForm'
@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import * as jose from 'jose'
+import { VideoPage } from './pages/VideoPage'
 
 function App() {
   const [authenticated, setAuthorization] = useState<boolean>(false)
@@ -42,16 +43,18 @@ function App() {
           ? (
             <Routes>
               <Route element={HomePage()} path='/'/>
-              <Route element={HomePage()} path='/create-video'  />
+              <Route element={VideoPage()} path='/video/:id' />
+              <Route element={<Navigate replace to={'/'} />} path='/create-video'  />
               <Route element={RegisterPage()} path='/register' />
               <Route element={LoginPage()} path='/login' />
-              <Route element={HomePage()} path='/dashboard' />
-              <Route element={HomePage()} path='/videos/update/:id' />
+              <Route element={<Navigate replace to={'/'} />} path='/dashboard' />
+              <Route element={<Navigate replace to={'/'} />} path='/videos/update/:id' />
             </Routes>
             )
           : (
             <Routes>
               <Route element={HomePage()} path='/'/>
+              <Route element={VideoPage()} path='/video/:id' />
               <Route element={VideoFormPage()} path='/create-video'  />
               <Route element={RegisterPage()} path='/register' />
               <Route element={LoginPage()} path='/login' />

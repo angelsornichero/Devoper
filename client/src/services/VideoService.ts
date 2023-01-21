@@ -1,8 +1,8 @@
 import axios from "axios"
 import { FaHandLizard } from "react-icons/fa"
 import { Video } from "../types/Video.type"
-
-
+import { getUser } from "./UserService"
+import { Comment } from "../types/Comment.type"
 
 export const getVideos = async () => {
     const { data } = await axios.get(import.meta.env.VITE_API_URL + '/videos')
@@ -81,5 +81,26 @@ export const deleteLike = async (id: string, jwt: string, likeId: string) => {
             authorization: `token ${jwt}`
         }
     })
+    return data
+}
+
+export const getComments = async (id: string) => {
+    const { data } = await axios.get(import.meta.env.VITE_API_URL + `/comments/${id}`)
+
+
+    return data
+
+}
+
+export const createComment = async (comment: string, jwt: string, id: string) => {
+    const { data } = await axios.post(import.meta.env.VITE_API_URL + `/comment/create/${id}`, {
+        comment: comment
+    },
+    {
+        headers: {
+            authorization: `token ${jwt}`
+        }
+    }
+    )
     return data
 }
