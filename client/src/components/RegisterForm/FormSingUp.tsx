@@ -28,7 +28,7 @@ export const FormSingUp = () => {
 
     return (
         <div className='mt-20 rounded-lg bg-slate-200'>
-                <form className='text-center p-12'>
+                <form className='text-center p-2 sm:p-12'>
                     <span className='text-4xl'>Register</span>
                     <div className='m-6 flex justify-center'>
                         <input className='rounded p-2 h-[30px] w-[350px]'

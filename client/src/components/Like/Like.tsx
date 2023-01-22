@@ -14,6 +14,7 @@ interface Props {
 
 export const Like = ({video, jwt, userId, id}: Props) => {
     const [like, setLike] = useState<boolean>(false)
+    
 
     const loadLike = async () => {
         const data = await giveLike(video?._id as string, jwt as string)
@@ -53,7 +54,7 @@ export const Like = ({video, jwt, userId, id}: Props) => {
    
     return (
     
-    <button  onClick={handleLike}><AiFillHeart id={`like${video._id}`} className='cursor-pointer text-4xl' /></button>
+    <button  onClick={handleLike}><AiFillHeart id={`like${video._id}`} className='cursor-pointer text-2xl sm:text-4xl' /></button>
     
   )
 }

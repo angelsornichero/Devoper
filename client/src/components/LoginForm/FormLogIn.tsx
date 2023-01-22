@@ -28,7 +28,7 @@ export const FormLogIn = () => {
 
     return (
         <div className='mt-20 rounded-lg bg-slate-200'>
-                <form className='text-center p-12'>
+                <form className='text-center p-2 sm:p-12'>
                     <span className='text-4xl'>Log in</span>
                     <div className='m-6 flex justify-center'>
                         <input className='rounded p-2 h-[30px] w-[350px]'

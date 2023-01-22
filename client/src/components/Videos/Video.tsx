@@ -47,12 +47,12 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
 
     return (
       
-        <div className='bg-blue-400 rounded-lg shadow-xl text-black max-w-[696px] shadow-gray-600'>
-          <div className='m-2 p-5'>
-            <ReactPlayer className='rounded-lg' url={video.url} />
+        <div className='bg-blue-400 rounded-lg shadow-xl text-black sm:max-w-[796px] shadow-gray-600'>
+          <div className='sm:w-[696px] sm:h-[450px] w-[375px] h-[250px]  sm:p-5 p-2'>
+            <ReactPlayer controls={false} width='100%' height='100%' className='rounded-lg w-4 h-6' url={video.url} />
           </div>
-          <Link to={`/video/${video._id}`} className='text-center'>
-            <h1 className='text-6xl font-bold' >
+          <Link to={`/video/${video._id}`} className='sm:p-4 text-center'>
+            <h1 className='text-4xl sm:text-6xl font-bold' >
               {video.title}
             </h1>
           </Link>
@@ -62,18 +62,17 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
                 jwt ? <Like jwt={jwt} userId={userId} video={video} id={video._id as string} /> : <AiFillHeart id={`like${video._id}`} className='text-4xl' />
               }
               
-              <span className='text-3xl'>{video.likes?.length}</span>
+              <span className='text-2xl sm:text-3xl'>{video.likes?.length}</span>
             </div>
             <div className='flex justify-center gap-4'>
-              <span className='text-3xl'>Comments: {video.comments?.length}</span>
+              <span className='text-2xl sm:text-3xl'>Comments: {video.comments?.length}</span>
             </div>
-            
           </div>
-          <div className='flex justify-between p-6 text-xl '>
+          <div className='flex justify-between p-2 sm:p-6 text-xl '>
             <div>
               <span>{video.description}</span>
             </div>
-            <div className='p-4 m-4'>
+            <div className='p-2 m-2 sm:m-4 sm:p-4'>
               <span>Video post by: <p className='text-md font-bold text-blue-600'>{user}</p></span>
               {dashboard === true ? 
                 (<div className='mt-4'>

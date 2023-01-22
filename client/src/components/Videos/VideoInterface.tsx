@@ -92,12 +92,12 @@ export const VideoInterface = () => {
                 video
                     ? (
                 <div className='w-screen'>
-                    <h1 className='text-center text-6xl mt-4 text-white font-bold'>{video.title}</h1>
-                    <div className='mx-16 my-8 flex justify-center rounded-lg'>
-                        <ReactPlayer width={1300} height={600} className='' url={video.url} />
+                    <h1 className='text-center text-6xl lg:text-9xl mt-4 text-white font-bold'>{video.title}</h1>
+                    <div className='mx-auto sm:mx-16 my-8 flex justify-center rounded-lg h-[200px] w-[396px] md:w-[700px] md:h-[400px] lg:h-[800px] 2xl:w-[1800px]'>
+                        <ReactPlayer controls={false} width={'100%'} height={'100%'} className='' url={video.url} />
                     </div>
                     <div className='mx-16 flex justify-between bg-white rounded-xl'>
-                        <span className='p-4 text-3xl flex gap-4'>Video posted by:<p className='text-blue-600'> {user}</p></span>
+                        <span className='p-4 text-lg sm:text-3xl flex gap-4'>Video posted by:<p className='text-blue-600'> {user}</p></span>
                         <div className='flex'>
                             { 
                                 jwt ? <Like jwt={jwt as string} id={video._id as string} video={video as Video} userId={userId as string} /> 
@@ -107,13 +107,13 @@ export const VideoInterface = () => {
                         </div>
                     </div>
                     <div className='m-10 border-blue-600 mx-10 border-2 rounded-xl text-center'>
-                        <h1 className='text-6xl text-white font-bold p-4'>Comments</h1>
+                        <h1 className='text-2xl sm:text-6xl text-white font-bold p-4'>Comments</h1>
                     </div>
                     {
                         jwt
                             ? (
-                                <div className='bg-white flex gap-4 rounded-2xl m-6 mx-[600px] p-4 justify-center'>
-                                    <input className='bg-green-700 text-2xl text-white p-3 w-96 rounded-xl' type={'text'} name='comment' onChange={handleInputChange} placeholder='Write a comment' />
+                                <div className='bg-white flex sm:gap-4 md:rounded-2xl m-6 lg:mx-[400px] p-4 justify-center'>
+                                    <input className='bg-green-700 md:text-2xl text-white p-3 w-96 rounded-xl' type={'text'} name='comment' onChange={handleInputChange} placeholder='Write a comment' />
                                 <button onClick={submitComment} className='text-4xl text-blue-600'><AiOutlineSend /></button>
 
                                 </div>
