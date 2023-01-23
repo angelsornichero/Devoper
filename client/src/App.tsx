@@ -44,6 +44,7 @@ function App() {
             <Routes>
               <Route element={HomePage()} path='/'/>
               <Route element={VideoPage()} path='/video/:id' />
+              <Route element={HomePage()} path='/search/:search' />
               <Route element={<Navigate replace to={'/'} />} path='/create-video'  />
               <Route element={RegisterPage()} path='/register' />
               <Route element={LoginPage()} path='/login' />
@@ -56,6 +57,7 @@ function App() {
               <Route element={HomePage()} path='/'/>
               <Route element={VideoPage()} path='/video/:id' />
               <Route element={VideoFormPage()} path='/create-video'  />
+              <Route element={HomePage()} path='/search/:search' />
               <Route element={RegisterPage()} path='/register' />
               <Route element={LoginPage()} path='/login' />
               <Route element={UserVideosPage()} path='/dashboard' />

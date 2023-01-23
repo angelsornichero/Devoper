@@ -5,34 +5,21 @@ import * as jose from 'jose'
 import { updateVideo, getVideoById } from '../../services/VideoService'
 import { toast } from 'react-toastify'
 import { useParams } from 'react-router-dom'
+import useAuthorization from '../../hooks/useAuthorization'
 
 export const Form = () => {
-    const [jwt, setJwt] = useState<string>('')
+    const { jwt } = useAuthorization()
     const [error, setError] = useState<string>('')
-    const [cookies, setCookies, removeCookie] = useCookies(['sessionJWT'])
     const [video, setVideo] = useState<Video>({title: '', url: '', description: ''})
     const { id } = useParams()
     
-    const verifyToken = async (cookie: any) => {
-        try { 
-          const verifyJWT = await jose.jwtVerify(cookie, new TextEncoder().encode(import.meta.env.VITE_SECRET_JWT as string))
-          if (!verifyJWT) setJwt('')
-          setJwt(cookie as string)
-        }
-        catch {
-          setJwt('')
-        }
-      }
-    
-      const verifyId = async () => {
-        const validate = await getVideoById(id as string)
-        if (!validate) window.location.href = '/dashboard' 
-        console.log(validate, validate.response, typeof validate)
-      }
+    const verifyId = async () => {
+      const validate = await getVideoById(id as string)
+      if (!validate) window.location.href = '/dashboard' 
+      console.log(validate, validate.response, typeof validate)
+    }
     
     useEffect(() => {
-        const cookie = cookies.sessionJWT
-        verifyToken(cookie)
         verifyId()
     }, [jwt])
 
@@ -46,7 +33,7 @@ export const Form = () => {
         if (video.url.includes('https://www.youtube.com/watch?v=') === false) return setError('[!] You must put an url of youtube') 
 
         try {
-            const data = await updateVideo(id as string, jwt, video)
+            const data = await updateVideo(id as string, jwt as string, video)
             toast.success('Video updated successfully')
             console.log(data)
             window.location.href = '/'

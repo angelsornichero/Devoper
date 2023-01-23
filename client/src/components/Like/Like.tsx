@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Video } from '../../types/Video.type'
 import { giveLike, deleteLike,  } from '../../services/VideoService'
 import { AiFillHeart } from 'react-icons/ai'
-import * as jose from 'jose'
-import { useCookies } from 'react-cookie'
+
 
 interface Props {
     video: Video,
     jwt: string,
     userId: string,
-    id: string
 }
 
-export const Like = ({video, jwt, userId, id}: Props) => {
+export const Like = ({video, jwt, userId }: Props) => {
     const [like, setLike] = useState<boolean>(false)
     
 

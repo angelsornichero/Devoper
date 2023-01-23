@@ -1,31 +1,14 @@
 import React, {ChangeEvent, useEffect, useState} from 'react'
-import { useCookies } from 'react-cookie'
-import * as jose from 'jose'
 import { Video } from '../../types/Video.type'
 import { createVideo } from '../../services/VideoService'
 import {toast} from 'react-toastify'
+import useAuthorization from '../../hooks/useAuthorization'
 
 export const Form = () => {
-    const [jwt, setJwt] = useState<string>('')
+    const { jwt } = useAuthorization()
     const [error, setError] = useState<string>('')
-    const [cookies, setCookies, removeCookie] = useCookies(['sessionJWT'])
     const [video, setVideo] = useState<Video>({title: '', url: '', description: ''})
-    const verifyToken = async (cookie: any) => {
-        try { 
-          const verifyJWT = await jose.jwtVerify(cookie, new TextEncoder().encode(import.meta.env.VITE_SECRET_JWT as string))
-          if (!verifyJWT) setJwt('')
-          setJwt(cookie as string)
-        }
-        catch {
-          setJwt('')
-        }
-      }
     
-    useEffect(() => {
-        const cookie = cookies.sessionJWT
-        verifyToken(cookie)
-    }, [jwt])
-
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setVideo({...video, [e.target.name]: e.target.value})
     }
@@ -36,7 +19,7 @@ export const Form = () => {
         if (video.url.includes('https://www.youtube.com/watch?v=') === false) return setError('[!] You must put an url of youtube') 
 
         try {
-            const data = await createVideo(video, jwt)
+            const data = await createVideo(video, jwt as string)
             toast.success('Video created successfully')
             console.log(data)
             window.location.href = '/'

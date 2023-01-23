@@ -4,8 +4,8 @@ import { Video } from "../types/Video.type"
 import { getUser } from "./UserService"
 import { Comment } from "../types/Comment.type"
 
-export const getVideos = async () => {
-    const { data } = await axios.get(import.meta.env.VITE_API_URL + '/videos')
+export const getVideos = async (keyword: string) => {
+    const { data } = await axios.get(import.meta.env.VITE_API_URL + `/videos/${keyword}`)
     return data
 }
 
@@ -56,7 +56,7 @@ export const updateVideo = async (id: string, jwt: string, video: Video) => {
 
 export const getVideoById = async (id: string) => {
     try { 
-        const { data } = await axios.get(import.meta.env.VITE_API_URL + `/videos/${id}`)
+        const { data } = await axios.get(import.meta.env.VITE_API_URL + `/video/${id}`)
         return data
     } catch {
         return false

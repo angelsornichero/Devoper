@@ -6,7 +6,14 @@ import { giveOneUser } from "./whatUser.js";
 
 
 export const getVideos: RequestHandler = async (req, res) => {
+    const keyword = req.params.keyword === '-' ? '' : req.params.keyword
     const videos = await Video.find()
+    videos.filter((el: any) => el.title.includes(keyword))
+    videos.sort((a, b) => {
+        if (a.likes.length < b.likes.length) return 1
+        if (a.likes.length > b.likes.length) return -1
+        return 0
+    })
     if (!videos) error({statusCode: 404, message: 'Any video founded'}, res)
     res.json({success: true, videos: videos})
 }

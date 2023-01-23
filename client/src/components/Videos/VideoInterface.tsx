@@ -1,24 +1,19 @@
-import  {useEffect, useState, ChangeEvent} from 'react'
+import  {useEffect, useState } from 'react'
 import { Video } from '../../types/Video.type'
 import { useParams } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 import { getUser } from '../../services/UserService'
-import { getVideoById, giveLike, deleteLike, createComment } from '../../services/VideoService'
-import { useCookies } from 'react-cookie'
-import * as jose from 'jose'
-import { AiFillHeart, AiOutlineSend } from 'react-icons/ai'
-import { Comment } from '../../types/Comment.type'
+import { getVideoById } from '../../services/VideoService'
 import { Comments } from '../Commentaries/Comments'
 import { Like } from '../Like/Like'
+import useAuthorization from '../../hooks/useAuthorization'
+import { CommentaryFrom } from '../Commentaries/CommentaryFrom'
 
 export const VideoInterface = () => {
+    const { userId, jwt } = useAuthorization()
     const [video, setVideo] = useState<Video>()
     const [error, setError] = useState<boolean>(false)
-    const [userId, setUserId] = useState<string>('')
     const [user, setUser] = useState<string>('')
-    const [jwt, setJwt] =  useState<string>()
-    const [cookie] = useCookies(['sessionJWT'])
-    const [sendComment, setSendComment] = useState<Comment>({comment: '', userId: userId})
     const { id } = useParams()
 
     const loadVideo = async () => {
@@ -26,16 +21,6 @@ export const VideoInterface = () => {
         if (!videoFound) return setError(true)
         setVideo(videoFound.video)
         
-    }
-    const loadUser = async () => {  
-        try {
-            const verify = jose.jwtVerify(cookie.sessionJWT, new TextEncoder().encode(import.meta.env.VITE_SECRET_JWT as string))
-            if (!verify) return
-            return setJwt(cookie.sessionJWT)
-        } catch {
-            return
-        }
-
     }
 
     const loadUserId = async () => {
@@ -45,36 +30,9 @@ export const VideoInterface = () => {
         setUser(data.username)
       }
 
-    const loadId = async () => {
-        const { payload } = await jose.jwtVerify(cookie.sessionJWT, new TextEncoder().encode(import.meta.env.VITE_SECRET_JWT as string))
-        setUserId(payload.id as string)
-        setJwt(cookie.sessionJWT)
-        return payload.id
-    }
-
-    const handleInputChange = (e: any) => {
-        setSendComment({...sendComment, [e.target.name]: e.target.value})
-    }
-    
-    const submitComment = async (e: any) => {
-        e.preventDefault()
-        console.log(sendComment.comment)
-        try {
-            const data = await createComment(sendComment.comment, jwt as string, id as string)
-            console.log(data)
-            window.location.reload()
-        }
-        catch {
-            return
-        }
-    }
-    
     useEffect(() => {
         loadVideo()
-        loadUser()
         loadUserId()
-        loadId()
-        // videoIsLiked()
     }, [])
 
     return (
@@ -100,7 +58,7 @@ export const VideoInterface = () => {
                         <span className='p-4 text-lg sm:text-3xl flex gap-4'>Video posted by:<p className='text-blue-600'> {user}</p></span>
                         <div className='flex'>
                             { 
-                                jwt ? <Like jwt={jwt as string} id={video._id as string} video={video as Video} userId={userId as string} /> 
+                                jwt ? <Like jwt={jwt as string} video={video as Video} userId={userId as string} /> 
                                 : <div></div>
                             }
                             <span className='text-3xl p-4'>{video.likes?.length}</span>
@@ -112,11 +70,7 @@ export const VideoInterface = () => {
                     {
                         jwt
                             ? (
-                                <div className='bg-white flex sm:gap-4 md:rounded-2xl m-6 lg:mx-[400px] p-4 justify-center'>
-                                    <input className='bg-green-700 md:text-2xl text-white p-3 w-96 rounded-xl' type={'text'} name='comment' onChange={handleInputChange} placeholder='Write a comment' />
-                                <button onClick={submitComment} className='text-4xl text-blue-600'><AiOutlineSend /></button>
-
-                                </div>
+                                <CommentaryFrom userId={userId as string} jwt={jwt as string} id={id as string}  />
                             )
                             : <div></div>
                     }

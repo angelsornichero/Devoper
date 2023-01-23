@@ -8,8 +8,8 @@ import { isAuthenticated } from "../middlewares/isAuthorized.js";
 const router = Router()
 
 // Get
-router.get('/videos', crtlVideo.getVideos)
-router.get('/videos/:id', crtlVideo.getVideo)
+router.get('/videos/:keyword', crtlVideo.getVideos)
+router.get('/video/:id', crtlVideo.getVideo)
 router.get('/comments/:id', crtlComment.getComments)
 router.get('/likes/:id', crtlLike.getLikes)
 router.get('/user/:id', crtlUser.getUserById)

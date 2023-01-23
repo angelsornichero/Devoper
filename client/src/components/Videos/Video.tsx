@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import { Video } from '../../types/Video.type'
 import ReactPlayer from 'react-player'
 import { getUser } from '../../services/UserService'
 import { deleteVideo } from '../../services/VideoService'
-import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import { AiFillHeart } from 'react-icons/ai'
-import * as jose from 'jose'
 import { Like } from '../Like/Like'
+import useAuthorization from '../../hooks/useAuthorization'
 
 interface Prop {
   video: Video,
@@ -15,10 +14,8 @@ interface Prop {
 }
 
 export const VideoComponent = ({video, dashboard = false}: Prop) => {
+    const { userId, jwt } = useAuthorization()
     const [user, setUser] = useState<string>('')
-    const [userId, setUserId] = useState<string>('')
-    const [jwt, setJwt] = useState<string>('')
-    const [cookie] = useCookies(['sessionJWT'])
 
 
     const loadUser = async () => {
@@ -27,21 +24,12 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
       setUser(data.username)
     }
 
-    const loadId = async () => {
-      const { payload } = await jose.jwtVerify(cookie.sessionJWT, new TextEncoder().encode(import.meta.env.VITE_SECRET_JWT as string))
-      setUserId(payload.id as string)
-      setJwt(cookie.sessionJWT)
-      console.log(payload.id, userId)
-      return payload.id
-    }
-
     useEffect(() => {
       loadUser()
-      loadId()
     })
 
     const handleDelete = async () => {
-      const data = await deleteVideo(video._id as string, cookie.sessionJWT as string)
+      const data = await deleteVideo(video._id as string, jwt as string)
       console.log(data)
     }
 
@@ -59,7 +47,7 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
           <div className='flex justify-between mt-2 mx-6'>
             <div className='flex justify-center gap-4'>
               { 
-                jwt ? <Like jwt={jwt} userId={userId} video={video} id={video._id as string} /> : <AiFillHeart id={`like${video._id}`} className='text-4xl' />
+                jwt ? <Like jwt={jwt} userId={userId} video={video} /> : <AiFillHeart id={`like${video._id}`} className='text-4xl' />
               }
               
               <span className='text-2xl sm:text-3xl'>{video.likes?.length}</span>

@@ -1,39 +1,18 @@
-import React, {useEffect, useState} from 'react'
+import {useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
-import * as jose from 'jose'
 import { FaUserCircle } from 'react-icons/fa'
 import { BiChevronDown } from 'react-icons/bi'
 import { toast } from 'react-toastify'
+import useAuthorization from '../../hooks/useAuthorization'
 
 export default function Navbar() {
-  const [jwt, setJwt] = useState<boolean>(false)
+  const { jwt } = useAuthorization()
   const [cookies, setCookies, removeCookie] = useCookies(['sessionJWT'])
   const [open, setOpen] = useState<boolean>(false)
 
-  const verifyToken = async (cookie: any) => {
-    try { 
-      const verifyJWT = await jose.jwtVerify(cookie, new TextEncoder().encode(import.meta.env.VITE_SECRET_JWT as string))
-      if (!verifyJWT) setJwt(false)
-      console.log(verifyJWT)
-      setJwt(true)
-      return verifyJWT
-    }
-    catch {
-      setJwt(false)
-    }
-  }
-
-  useEffect(() => {
-    const cookie = cookies.sessionJWT
-    verifyToken(cookie)
-    console.log(cookie)
-    
-  })
-
   const handleLogout = () => {
     removeCookie('sessionJWT')
-    setJwt(false)
     toast.success('User correctly logout')
     window.location.reload()
   }
@@ -64,8 +43,8 @@ export default function Navbar() {
           </li>
         </ul>
         {
-          jwt === false 
-          
+          jwt === undefined
+
           ? (
               <ul className='flex flex-nowrap gap-6'>
                 <li className='text-sm sm:text-xl pt-6 font-display'>
