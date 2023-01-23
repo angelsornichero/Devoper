@@ -47,7 +47,7 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
 
     return (
       
-        <div className='bg-blue-400 rounded-lg shadow-xl text-black sm:max-w-[796px] shadow-gray-600'>
+        <div className='bg-blue-400 rounded-lg shadow-xl text-black sm:max-w-[696px] shadow-gray-600'>
           <div className='sm:w-[696px] sm:h-[450px] w-[375px] h-[250px]  sm:p-5 p-2'>
             <ReactPlayer controls={false} width='100%' height='100%' className='rounded-lg w-4 h-6' url={video.url} />
           </div>

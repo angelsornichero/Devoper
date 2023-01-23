@@ -11,7 +11,7 @@ export default  function Videos() {
   const loadVideos = async () => {
     const videosFounded = await getVideos()
     console.log(videosFounded)
-    setVideos(videosFounded.videos)
+    setVideos(videosFounded.videos.slice(-6))
   }
 
   useEffect(() => {
@@ -22,6 +22,7 @@ export default  function Videos() {
   return (
     <div className='flex flex-wrap mx-20 my-8 justify-around'>
       {loading ? <h1>Loading</h1> : videos.map((video) => {
+        console.log(videos)
         return (
           <div className='flex flex-wrap sm:m-20 m-10 justify-around' key={video._id}>
             <VideoComponent dashboard={false} video={video} />
