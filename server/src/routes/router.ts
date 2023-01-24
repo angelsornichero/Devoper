@@ -8,12 +8,12 @@ import { isAuthenticated } from "../middlewares/isAuthorized.js";
 const router = Router()
 
 // Get
-router.get('/videos/:keyword', crtlVideo.getVideos)
+router.get('/videos/tendences/:keyword', crtlVideo.getVideosTendeces)
 router.get('/video/:id', crtlVideo.getVideo)
 router.get('/comments/:id', crtlComment.getComments)
 router.get('/likes/:id', crtlLike.getLikes)
 router.get('/user/:id', crtlUser.getUserById)
-router.get('/video/user/', crtlVideo.getVideosByUserId)
+router.get('/videos/user/', crtlVideo.getVideosByUserId)
 // Post
 router.post('/comment/create/:id', isAuthenticated, crtlComment.createComment)
 router.post('/video/create', isAuthenticated, crtlVideo.createVideo)

@@ -7,6 +7,7 @@ export interface Video {
     userId?: string,
     updatedAt?: string,
     comments?: Array<any>,
-    likes?: Array<any>
+    likes?: Array<any>,
+    area: string
   }
   

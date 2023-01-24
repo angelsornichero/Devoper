@@ -12,6 +12,7 @@ const useVideos = ({ keyword }: Params) => {
   
   const loadVideos = async () => {
     const videosFounded = await getVideos(keyword)
+    console.log(videosFounded)
     setVideos(videosFounded.videos.slice(0, 6))
     setLoading(false)
   }

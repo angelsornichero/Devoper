@@ -20,7 +20,6 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
 
     const loadUser = async () => {
       const data = await getUser(video.userId as string)
-      console.log(data)
       setUser(data.username)
     }
 
@@ -30,6 +29,7 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
 
     const handleDelete = async () => {
       const data = await deleteVideo(video._id as string, jwt as string)
+      window.location.reload()
       console.log(data)
     }
 
@@ -62,6 +62,8 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
             </div>
             <div className='p-2 m-2 sm:m-4 sm:p-4'>
               <span>Video post by: <p className='text-md font-bold text-blue-600'>{user}</p></span>
+              <span>Created at: <p className='text-blue-800'>{video.createdAt?.split('T')[0]}</p></span>
+              <span>Area: <p className='text-blue-700'>{video.area || 'All'}</p></span>
               {dashboard === true ? 
                 (<div className='mt-4'>
                   <button onClick={handleDelete} className='bg-red-600 p-4 rounded-lg'>Delete video</button>

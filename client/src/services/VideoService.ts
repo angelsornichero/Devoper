@@ -1,16 +1,14 @@
 import axios from "axios"
-import { FaHandLizard } from "react-icons/fa"
 import { Video } from "../types/Video.type"
-import { getUser } from "./UserService"
-import { Comment } from "../types/Comment.type"
+
 
 export const getVideos = async (keyword: string) => {
-    const { data } = await axios.get(import.meta.env.VITE_API_URL + `/videos/${keyword}`)
+    const { data } = await axios.get(import.meta.env.VITE_API_URL + `/videos/tendences/${keyword}`)
     return data
 }
 
 export const getVideosByUser = async (token: string) => {
-    const { data } = await axios.get(import.meta.env.VITE_API_URL + '/videos', {
+    const { data } = await axios.get(import.meta.env.VITE_API_URL + '/videos/user/', {
         headers : {
             authorization: `token ${token}`
         }
@@ -23,7 +21,8 @@ export const createVideo = async (video: Video, jwt: string) => {
     const { data } = await axios.post(import.meta.env.VITE_API_URL + '/video/create', {
         title: video.title,
         url: video.url,
-        description: video.description
+        description: video.description,
+        area: video.area
     }, {
         headers: {
             authorization: `token ${jwt}`

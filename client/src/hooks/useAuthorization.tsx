@@ -17,6 +17,7 @@ const useAuthorization = () => {
 
     useEffect(() => {loadId()})
 
+    // console.log(jwt)
     return { userId, jwt }
 }
 

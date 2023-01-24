@@ -5,14 +5,26 @@ import User from '../models/User.js'
 import { giveOneUser } from "./whatUser.js";
 
 
-export const getVideos: RequestHandler = async (req, res) => {
+export const getVideosTendeces: RequestHandler = async (req, res) => {
     const keyword = req.params.keyword === '-' ? '' : req.params.keyword
     const videos = await Video.find()
     videos.filter((el: any) => el.title.includes(keyword))
+    let videoTendencesByLike = true
     videos.sort((a, b) => {
-        if (a.likes.length < b.likes.length) return 1
-        if (a.likes.length > b.likes.length) return -1
+        if (a.likes.length < b.likes.length && videoTendencesByLike === true) {videoTendencesByLike = false ;return 1}
+        if (a.likes.length > b.likes.length && videoTendencesByLike === true) {videoTendencesByLike = false; return -1}
+        if (a.createdAt < b.createdAt && videoTendencesByLike === false) {
+            videoTendencesByLike = true
+            return 1
+        }
+
+        if (a.createdAt > b.createdAt && videoTendencesByLike === false) {
+            videoTendencesByLike = true
+            return -1
+        }
+        
         return 0
+        
     })
     if (!videos) error({statusCode: 404, message: 'Any video founded'}, res)
     res.json({success: true, videos: videos})
@@ -44,7 +56,7 @@ export const createVideo: RequestHandler = async (req, res) => {
     if (!findUser) return error({statusCode: 401, message: "You have to register before create a video"}, res)
 
     try {
-        const createNewVideo = new Video({title: req.body.title, description: req.body.description, url: req.body.url, userId: findUser})
+        const createNewVideo = new Video({title: req.body.title, description: req.body.description, url: req.body.url, userId: findUser, area: req.body.area})
         const savedVideo = await createNewVideo.save()
         res.json({ success: true, message: '[*] Video succesfully created' })
     }
@@ -58,6 +70,7 @@ export const getVideo: RequestHandler = async (req, res) => {
     try {
         const videoFound = await Video.findById(req.params.id)
         if (!videoFound) return error({statusCode: 204, message: `Any video with id: ${req.params.id} found`}, res)
+        console.log(videoFound.createdAt)
         res.json({ success: true, video: videoFound })
     } catch {
         error({statusCode: 404, message: 'No videos with that id'}, res)

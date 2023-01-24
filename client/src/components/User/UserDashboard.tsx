@@ -1,40 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import * as jose from 'jose'
 import { useCookies } from 'react-cookie'
 import { getVideosByUser } from '../../services/VideoService'
 import { Video } from '../../types/Video.type'
 import { VideoComponent } from '../Videos/Video'
 
-export const UserDashboard = () => {
-  const [jwt, setJwt] = useState<string>('')
-  const [username, setUsername] = useState<string>('')
-  const [cookies, setCookies] = useCookies(['sessionJWT'])
+export const UserDashboard = () => {``
+  const [cookies] = useCookies(['sessionJWT'])
   const [videos, setVideos] = useState<Video[]>([])
 
-  const verifyToken = async (cookie: any) => {
-    try { 
-      const verifyJWT = await jose.jwtVerify(cookie, new TextEncoder().encode(import.meta.env.VITE_SECRET_JWT as string))
-      if (!verifyJWT) setJwt('')
-      console.log(verifyJWT)
-      setUsername(verifyJWT.payload.username as any)
-      setJwt(cookie)
-      return verifyJWT
-    }
-    catch {
-      setJwt('')
-    }
-  }
   
   const getVideos = async () => {
-    const data = await getVideosByUser(jwt)
-    console.log(data)
+    const data = await getVideosByUser(cookies.sessionJWT as string)
     setVideos(data.videos)
   }
 
   useEffect(() => {
-    const cookie = cookies.sessionJWT
-    verifyToken(cookie)
-    console.log(cookie, verifyToken(cookie))
+    
     getVideos()
   }, [])
 

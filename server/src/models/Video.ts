@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 
+
+
 const commentsSchema = new Schema({
     comment: {
         type: String, 
@@ -50,6 +52,11 @@ const videoSchema = new Schema({
         required: true,
         trim: true,
         ref: 'users'
+    },
+    area: {
+        type: String,
+        required: true,
+        trim: true 
     },
     comments: [commentsSchema],
     likes: [likeSchema]

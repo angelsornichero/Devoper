@@ -7,9 +7,9 @@ import useAuthorization from '../../hooks/useAuthorization'
 export const Form = () => {
     const { jwt } = useAuthorization()
     const [error, setError] = useState<string>('')
-    const [video, setVideo] = useState<Video>({title: '', url: '', description: ''})
+    const [video, setVideo] = useState<Video>({title: '', url: '', description: '', area: 'All'})
     
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setVideo({...video, [e.target.name]: e.target.value})
     }
 
@@ -53,6 +53,19 @@ export const Form = () => {
                 <div className='m-6 flex justify-center'>
                     <textarea name='description' className='rounded p-4 w-[350px]' onChange={(e) => handleInputChange(e)} rows={3} placeholder='Write a description to the video'>
                     </textarea>
+                </div>
+                <div className='flex justify-between'>
+                    <span className='text-lg'>Select the programation area</span>
+                    <select onChange={handleInputChange} name="area">
+                        <option value={'All'}>All</option>
+                        <option value={'Backend'}>Backend</option>
+                        <option value={'Frontend'}>Frontend</option>
+                        <option value={'Data Science'}>Data science</option>
+                        <option value={'Machine Learning'}>Machine Learning</option>
+                        <option value={'Database'}>Database</option>
+                        <option value={'Mobile'}>Mobile</option>
+                    </select>
+                    
                 </div>
                 <div className='m-6 flex justify-center'>
                     <button className='bg-green-400 p-4 rounded-md' onClick={(e) => handleNewVideo(e)}>Create Video</button>
