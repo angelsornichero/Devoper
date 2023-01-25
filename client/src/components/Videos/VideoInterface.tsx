@@ -8,6 +8,8 @@ import { Comments } from '../Commentaries/Comments'
 import { Like } from '../Like/Like'
 import useAuthorization from '../../hooks/useAuthorization'
 import { CommentaryFrom } from '../Commentaries/CommentaryFrom'
+import useUserHistory from '../../hooks/useUserHistory'
+import debounce from 'just-debounce-it'
 
 export const VideoInterface = () => {
     const { userId, jwt } = useAuthorization()
@@ -15,12 +17,13 @@ export const VideoInterface = () => {
     const [error, setError] = useState<boolean>(false)
     const [user, setUser] = useState<string>('')
     const { id } = useParams()
+    const { addVideoToHistory } = useUserHistory()
 
     const loadVideo = async () => {
         const videoFound = await getVideoById(id as string)
         if (!videoFound) return setError(true)
         setVideo(videoFound.video)
-        
+        addVideoToHistory(videoFound.video)   
     }
 
     const loadUserId = async () => {

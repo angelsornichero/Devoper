@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
+import {ChangeEvent, useState} from 'react'
 import { Video } from '../../types/Video.type'
 import { createVideo } from '../../services/VideoService'
 import {toast} from 'react-toastify'
@@ -32,7 +32,7 @@ export const Form = () => {
     return (
         <div className='mt-20 rounded-lg bg-slate-200'>
             {error === '' ? <div></div> : <div className='bg-red-600 text-xl rounded-lg'><h1 className='p-4'>{error}</h1></div>}
-            <form className='text-center p-2 sm:p-12'>
+            <form className='text-center p-2 sm:p-14'>
                 <span className='text-4xl'>Create a new video</span>
                 <div className='m-6 flex justify-center'>
                     <input className='rounded p-2 h-[30px] w-[350px]'
@@ -55,7 +55,7 @@ export const Form = () => {
                     </textarea>
                 </div>
                 <div className='flex justify-between'>
-                    <span className='text-lg'>Select the programation area</span>
+                    <span className='text-lg'>Select a tag</span>
                     <select onChange={handleInputChange} name="area">
                         <option value={'All'}>All</option>
                         <option value={'Backend'}>Backend</option>
@@ -64,6 +64,7 @@ export const Form = () => {
                         <option value={'Machine Learning'}>Machine Learning</option>
                         <option value={'Database'}>Database</option>
                         <option value={'Mobile'}>Mobile</option>
+                        <option value={'OS Languages or systems'}>OS Languages or systems</option>
                     </select>
                     
                 </div>

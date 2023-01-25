@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import * as jose from 'jose'
 import { VideoPage } from './pages/VideoPage'
+import { HistoryPage } from './pages/HistoryPage'
 
 function App() {
   const [authenticated, setAuthorization] = useState<boolean>(false)
@@ -37,22 +38,24 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
+      
         {
           authenticated === false 
           ? (
-            <Routes>
-              <Route element={HomePage()} path='/'/>
-              <Route element={VideoPage()} path='/video/:id' />
-              <Route element={HomePage()} path='/search/:search' />
-              <Route element={<Navigate replace to={'/'} />} path='/create-video'  />
-              <Route element={RegisterPage()} path='/register' />
-              <Route element={LoginPage()} path='/login' />
-              <Route element={<Navigate replace to={'/'} />} path='/dashboard' />
-              <Route element={<Navigate replace to={'/'} />} path='/videos/update/:id' />
-            </Routes>
+            <>
+            <NavBar />
+              <Routes>
+                <Route element={HomePage()} path='/'/>
+                <Route element={VideoPage()} path='/video/:id' />
+                <Route element={HomePage()} path='/search/:search' />
+                <Route element={RegisterPage()} path='/register' />
+                <Route element={LoginPage()} path='/login' />
+              </Routes>
+            </>
             )
           : (
+          <>
+            <NavBar />
             <Routes>
               <Route element={HomePage()} path='/'/>
               <Route element={VideoPage()} path='/video/:id' />
@@ -62,7 +65,9 @@ function App() {
               <Route element={LoginPage()} path='/login' />
               <Route element={UserVideosPage()} path='/dashboard' />
               <Route element={UpdatePage()} path='/videos/update/:id' />
+              <Route element={HistoryPage()} path='/user/history' />
             </Routes>
+            </>
           )
         }
       <ToastContainer />

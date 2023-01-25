@@ -24,6 +24,7 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
     }
 
     useEffect(() => {
+      console.log('reset')
       loadUser()
     })
 

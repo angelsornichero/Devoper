@@ -14,7 +14,7 @@ export default function Navbar() {
   const handleLogout = () => {
     removeCookie('sessionJWT')
     toast.success('User correctly logout')
-    window.location.reload()
+    window.location.href = '/'
   }
 
   const handleModal = () => {
@@ -76,6 +76,9 @@ export default function Navbar() {
         <ul className='bg-gray-900 mr-3 rounded-lg '>
           <li className='text-sm text-center sm:text-xl p-1 sm:p-6 font-display border-b-[1px] sm:border-b-2'>
             <Link id='nav-button-2' className='text-white  cursor-pointer' to={'/dashboard'}>Your videos!</Link>
+          </li>
+          <li className='text-sm text-center sm:text-xl p-1 sm:p-6 font-display border-b-[1px] sm:border-b-2'>
+            <Link id='nav-button-2' className='text-white  cursor-pointer' to={'/user/history'}>History of videos</Link>
           </li>
           <li className='text-sm text-center sm:text-xl p-1 sm:p-6 font-display sm:border-b-2'>
             <button id='nav-button' onClick={handleLogout} className='text-white cursor-pointer '>Logout</button>
