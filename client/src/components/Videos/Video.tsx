@@ -11,12 +11,11 @@ import useAuthorization from '../../hooks/useAuthorization'
 interface Prop {
   video: Video,
   dashboard?: boolean,
-  reset: any,
-  setReset: any,
+  handleReset: any,
   history?: boolean
 }
 
-export const VideoComponent = ({video, dashboard = false, reset, setReset, history = false}: Prop) => {
+export const VideoComponent = ({video, dashboard = false, handleReset, history = false}: Prop) => {
 	const { userId, jwt } = useAuthorization()
 	const [user, setUser] = useState<string>('')
     
@@ -27,9 +26,8 @@ export const VideoComponent = ({video, dashboard = false, reset, setReset, histo
 	}
 
 	useEffect(() => {
-		console.log('reset')
 		loadUser()
-	}, [reset])
+	})
 
 	const handleDelete = async () => {
 		const data = await deleteVideo(video._id as string, jwt as string)
@@ -55,7 +53,7 @@ export const VideoComponent = ({video, dashboard = false, reset, setReset, histo
 						<div className='flex justify-between mt-2 mx-6'>
 							<div className='flex justify-center gap-4'>
 								{ 
-									jwt ? <Like reset={reset} setReset={setReset} jwt={jwt} userId={userId} video={video} /> : <AiFillHeart id={`like${video._id}`} className='text-4xl' />
+									jwt ? <Like handleReset={handleReset} jwt={jwt} userId={userId} video={video} /> : <AiFillHeart id={`like${video._id}`} className='text-4xl' />
 								}
                     
 								<span className='text-2xl sm:text-3xl'>{video.likes?.length}</span>

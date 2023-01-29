@@ -36,7 +36,7 @@ export default function Navbar() {
 			<nav className='flex justify-between'>
 				<ul className='sm:ml-10 flex flex-nowrap gap-6'>
 					<li className='text-4xl sm:text-5xl p-2 pt-3 font-body sm:p-3'>
-						<Link to={'/'}>DEVOPER</Link>
+						<a href='/'>DEVOPER</a>
 					</li>
 					<li className='hidden lg:block sm:text-2xl sm:pt-7 font-display'>
             Learn to code watching videos

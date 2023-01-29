@@ -19,6 +19,7 @@ export const VideoInterface = () => {
 	const { id } = useParams()
 	const { addVideoToHistory } = useUserHistory()
 
+	
 	const loadVideo = async () => {
 		const videoFound = await getVideoById(id as string)
 		if (!videoFound) return setError(true)
@@ -31,6 +32,10 @@ export const VideoInterface = () => {
 		if (!videoFound) return
 		const data = await getUser(videoFound.video.userId.toString())
 		setUser(data.username)
+	}
+
+	const handleReset = () => {
+		setReset(reset + 1)
 	}
 
 	useEffect(() => {
@@ -61,7 +66,7 @@ export const VideoInterface = () => {
 								<span className='p-4 text-lg sm:text-3xl flex gap-4'>Video posted by:<p className='text-blue-600'> {user}</p></span>
 								<div className='flex p-4 gap-2'>
 									{ 
-										jwt ? <Like reset={reset} setReset={setReset} jwt={jwt as string} video={video as Video} userId={userId as string} /> 
+										jwt ? <Like handleReset={handleReset} jwt={jwt as string} video={video as Video} userId={userId as string} /> 
 											: <div></div>
 									}
 									<span className='text-3xl'>{video.likes?.length}</span>

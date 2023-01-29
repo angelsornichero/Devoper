@@ -7,27 +7,27 @@ import { giveOneUser } from "./whatUser.js";
 
 export const getVideosTendeces: RequestHandler = async (req, res) => {
     const keyword = req.params.keyword === '-' ? '' : req.params.keyword
-    const videos = await Video.find()
-    videos.filter((el: any) => el.title.includes(keyword))
+    const rawVideos = await Video.find()
+    console.log(keyword)
+    const videosUnSorted: any[] = rawVideos.filter((el: any) => el.title.toLowerCase().includes(keyword.toLowerCase()))
     let videoTendencesByLike = true
-    videos.sort((a, b) => {
+    const videos = videosUnSorted.sort((a: any, b: any) => {
         if (a.likes.length < b.likes.length && videoTendencesByLike === true) {videoTendencesByLike = false ;return 1}
         if (a.likes.length > b.likes.length && videoTendencesByLike === true) {videoTendencesByLike = false; return -1}
         if (a.createdAt < b.createdAt && videoTendencesByLike === false) {
             videoTendencesByLike = true
-            return 1
+            return -1
         }
 
         if (a.createdAt > b.createdAt && videoTendencesByLike === false) {
             videoTendencesByLike = true
-            return -1
+            return 1
         }
-        
         return 0
         
     })
     if (!videos) error({statusCode: 404, message: 'Any video founded'}, res)
-    res.json({success: true, videos: videos})
+    res.json({success: true, videos: videos.slice(0, 500)})
 }
 export const getVideosByUserId: RequestHandler = async (req, res) => {
     const videos = await Video.find()

@@ -7,11 +7,10 @@ interface Props {
     video: Video,
     jwt: string,
     userId: string,
-    setReset: any,
-    reset: any
+    handleReset: any
 }
 
-export const Like = ({video, jwt, userId, setReset, reset }: Props) => {
+export const Like = ({video, jwt, userId, handleReset }: Props) => {
 	const [like, setLike] = useState<boolean>(false)
     
 
@@ -22,7 +21,7 @@ export const Like = ({video, jwt, userId, setReset, reset }: Props) => {
 		const likeBox = document.querySelector(`#like${video?._id}`)
 		likeBox?.classList.add('text-red-600')
 		likeBox?.classList.remove('text-black')
-		setReset(reset += 1)
+		handleReset()
 	}
 	const loadDisLike = async (likeId: string) => {
 		const data = await deleteLike(video?._id as string, jwt as string, likeId)
@@ -30,7 +29,7 @@ export const Like = ({video, jwt, userId, setReset, reset }: Props) => {
 		const likeBox = document.querySelector(`#like${video?._id}`) 
 		console.log(likeBox?.classList)
 		likeBox?.classList.add('text-black')
-		setReset(reset += 1)
+		handleReset()
 	}
     
 	const videoIsLiked =  () => {
@@ -63,7 +62,7 @@ export const Like = ({video, jwt, userId, setReset, reset }: Props) => {
 
 	useEffect(() => {
 		videoIsLiked()
-	}, [reset])
+	})
    
 	return (
 
