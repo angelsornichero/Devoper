@@ -1,26 +1,25 @@
-import {useEffect, useState} from 'react'
 import { Video } from '../types/Video.type'
 
 const useUserHistory = () => {
   
-  const getHistory = () => {
-    const rawVideos = localStorage.getItem('lastVideos') ? localStorage.getItem('lastVideos') : '[]'
-    const videos: Array<any> = JSON.parse(rawVideos as string)
-    return videos
-  }
+	const getHistory = () => {
+		const rawVideos = localStorage.getItem('lastVideos') ? localStorage.getItem('lastVideos') : '[]'
+		const videos: Array<any> = JSON.parse(rawVideos as string)
+		return videos
+	}
 
-  let history: any = getHistory()
+	const history: any = getHistory()
   
-  const addVideoToHistory = (video: Video) => {
-    const filterHistory = history.filter((el: Video) => el._id === video._id)
-    if (filterHistory.length > 0) return
-    history.push(video)
-    localStorage.setItem('lastVideos', JSON.stringify(history))
-  }
+	const addVideoToHistory = (video: Video) => {
+		const filterHistory = history.filter((el: Video) => el._id === video._id)
+		if (filterHistory.length > 0) return
+		history.push(video)
+		localStorage.setItem('lastVideos', JSON.stringify(history))
+	}
 
   
 
-  return { getHistory, addVideoToHistory }
+	return { getHistory, addVideoToHistory }
 
 }
 

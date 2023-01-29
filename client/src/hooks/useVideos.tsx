@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 import { getVideos } from '../services/VideoService'
 import { Video } from '../types/Video.type'
 
@@ -7,30 +7,22 @@ interface Params {
 }
 
 const useVideos = ({ keyword }: Params) => {
-  const [videos, setVideos] = useState<Video[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [reset, setReset] = useState<number>(0)
+	const [videos, setVideos] = useState<Video[]>([])
+	const [loading, setLoading] = useState<boolean>(true)
+	const [reset, setReset] = useState<number>(0)
 
-  const loadVideos = async () => {
-    const videosFounded = await getVideos(keyword)
-    console.log(videosFounded)
-    setVideos(videosFounded.videos.slice(0, 6))
-    setLoading(false)
-  }
+	const loadVideos = async () => {
+		const videosFounded = await getVideos(keyword)
+		console.log(videosFounded)
+		setVideos(videosFounded.videos.slice(0, 6))
+		setLoading(false)
+	}
 
-  const loadLastKeywords = () => {
-    if (keyword === '-') return
-    if (!localStorage.getItem('lastSearches')) return localStorage.setItem('lastSearches', JSON.stringify([keyword]))
-    const lastSearches = JSON.parse(localStorage.getItem('lastSearches') as string)
-    lastSearches.push(keyword)
-    localStorage.setItem('lastSearches', JSON.stringify(lastSearches))
-  }
+	useEffect(() => {
+		loadVideos()
+	}, [reset])
 
-  useEffect(() => {
-    loadVideos()
-  }, [reset])
-
-  return { loading, videos, reset, setReset }
+	return { loading, videos, reset, setReset }
 }
 
 export default useVideos
