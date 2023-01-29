@@ -8,6 +8,7 @@ export interface Video {
     updatedAt?: string,
     comments?: Array<any>,
     likes?: Array<any>,
-    area: string
+    area: string,
+    undefined: string
   }
   

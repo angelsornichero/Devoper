@@ -18,7 +18,6 @@ export const getComments: RequestHandler = async (req, res) => {
         commentList.push({id: comment._id.toString(), comment: comment.comment, username: username})
         
     }
-    console.log(commentList)
 
     res.json({success: true, comments: commentList})
 }

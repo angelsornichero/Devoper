@@ -17,18 +17,8 @@ interface Prop {
 
 export const VideoComponent = ({video, dashboard = false, handleReset, history = false}: Prop) => {
 	const { userId, jwt } = useAuthorization()
-	const [user, setUser] = useState<string>('')
+
     
-
-	const loadUser = async () => {
-		const data = await getUser(video.userId as string)
-		setUser(data.username)
-	}
-
-	useEffect(() => {
-		loadUser()
-	})
-
 	const handleDelete = async () => {
 		const data = await deleteVideo(video._id as string, jwt as string)
 		window.location.reload()
@@ -70,7 +60,7 @@ export const VideoComponent = ({video, dashboard = false, handleReset, history =
 					<span>{video.description}</span>
 				</div>
 				<div className='p-2 m-2 sm:m-4 sm:p-4'>
-					<span>Video post by: <p className='text-md font-bold text-blue-600'>{user}</p></span>
+					<span>Video post by: <p className='text-md font-bold text-blue-600'>{video.undefined}</p></span>
 					<span>Created at: <p className='text-blue-800'>{video.createdAt?.split('T')[0]}</p></span>
 					<span>Area: <p className='text-blue-700'>{video.area || 'All'}</p></span>
 					{dashboard === true ? 

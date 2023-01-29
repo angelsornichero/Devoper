@@ -9,20 +9,34 @@ export const getVideosTendeces: RequestHandler = async (req, res) => {
     const keyword = req.params.keyword === '-' ? '' : req.params.keyword
     const rawVideos = await Video.find()
     console.log(keyword)
+    // Here we filter the videos if they includes de keyword
     const videosUnSorted: any[] = rawVideos.filter((el: any) => el.title.toLowerCase().includes(keyword.toLowerCase()))
-    let videoTendencesByLike = true
-    const videos = videosUnSorted.sort((a: any, b: any) => {
-        if (a.likes.length < b.likes.length && videoTendencesByLike === true) {videoTendencesByLike = false ;return 1}
+    
+    const videosMapped: any[] = []
+
+    for (let i = 0; i < videosUnSorted.length; i++) {
+        const video = videosUnSorted[i]
+        const { username } = await User.findById(video.userId.toString()) as any
+        videosMapped.push({...video._doc, [video._doc.username]: username})
+    }
+    // Now lets sort the items
+    let videoTendencesByLike: boolean = true
+    const videos = videosMapped.sort((a: any, b: any) => {
+        const ADate = new Date(a.createdAt)
+        const BDate = new Date(b.createdAt)
+        if (a.likes.length < b.likes.length && videoTendencesByLike === true) {videoTendencesByLike = false; return 1}
         if (a.likes.length > b.likes.length && videoTendencesByLike === true) {videoTendencesByLike = false; return -1}
-        if (a.createdAt < b.createdAt && videoTendencesByLike === false) {
+        if (ADate > BDate && videoTendencesByLike === false) {
             videoTendencesByLike = true
             return -1
         }
-
-        if (a.createdAt > b.createdAt && videoTendencesByLike === false) {
+        if (ADate < BDate && videoTendencesByLike === false) {
             videoTendencesByLike = true
             return 1
         }
+
+        videoTendencesByLike = !videoTendencesByLike
+
         return 0
         
     })
