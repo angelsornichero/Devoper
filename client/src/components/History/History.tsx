@@ -5,8 +5,12 @@ import { Video } from '../../types/Video.type'
 
 export const History = () => {
     const { getHistory } = useUserHistory()
+    const [reset, setReset] = useState<number>(0)
+    const [videos, setVideos] = useState<Video[]>([])
+    useEffect(() => {
+        setVideos(getHistory())
+    }, [reset])
     
-    const videos = getHistory()
   
     return (
     <>
@@ -16,7 +20,7 @@ export const History = () => {
                 videos.map((video) => {
                     return (
                         <div key={video._id}>
-                            <VideoComponent video={video} />
+                            <VideoComponent history={true} reset={reset} setReset={setReset} video={video} />
                         </div>
                     )
                 })

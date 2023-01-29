@@ -7,7 +7,7 @@ import { VideoComponent } from '../Videos/Video'
 export const UserDashboard = () => {``
   const [cookies] = useCookies(['sessionJWT'])
   const [videos, setVideos] = useState<Video[]>([])
-
+  const [reset, setReset] = useState<number>(0)
   
   const getVideos = async () => {
     const data = await getVideosByUser(cookies.sessionJWT as string)
@@ -15,9 +15,8 @@ export const UserDashboard = () => {``
   }
 
   useEffect(() => {
-    
     getVideos()
-  }, [])
+  }, [reset])
 
   
 
@@ -31,7 +30,7 @@ export const UserDashboard = () => {``
             {videos.map((video) => {
                 return (
                     <div className='m-10' key={video._id}>
-                        <VideoComponent video={video} dashboard={true} />
+                        <VideoComponent reset={reset} setReset={setReset} video={video} dashboard={true} />
                     </div>
                 )
             })}

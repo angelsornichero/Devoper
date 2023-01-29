@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import useVideos from '../../hooks/useVideos'
 import { VideoComponent } from './Video'
 
 
 export default  function Videos() {
- const { loading, videos } = useVideos({keyword: '-'})
+  const { loading, videos, setReset, reset } = useVideos({keyword: '-'})
+  
 
   return (
     <div>
@@ -13,7 +14,7 @@ export default  function Videos() {
         {loading ? <h1>Loading</h1> : videos.map((video) => {
           return (
             <div className='flex flex-wrap sm:m-20 m-10 justify-around' key={video._id}>
-              <VideoComponent dashboard={false} video={video} />
+              <VideoComponent reset={reset} setReset={setReset} dashboard={false} video={video} />
             </div>
           )
         })}

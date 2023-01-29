@@ -16,6 +16,7 @@ export const VideoInterface = () => {
     const [video, setVideo] = useState<Video>()
     const [error, setError] = useState<boolean>(false)
     const [user, setUser] = useState<string>('')
+    const [reset, setReset] = useState<number>(0)
     const { id } = useParams()
     const { addVideoToHistory } = useUserHistory()
 
@@ -36,7 +37,7 @@ export const VideoInterface = () => {
     useEffect(() => {
         loadVideo()
         loadUserId()
-    }, [])
+    }, [reset])
 
     return (
         <div>
@@ -59,12 +60,12 @@ export const VideoInterface = () => {
                     </div>
                     <div className='mx-16 flex justify-between bg-white rounded-xl'>
                         <span className='p-4 text-lg sm:text-3xl flex gap-4'>Video posted by:<p className='text-blue-600'> {user}</p></span>
-                        <div className='flex'>
+                        <div className='flex p-4 gap-2'>
                             { 
-                                jwt ? <Like jwt={jwt as string} video={video as Video} userId={userId as string} /> 
+                                jwt ? <Like reset={reset} setReset={setReset} jwt={jwt as string} video={video as Video} userId={userId as string} /> 
                                 : <div></div>
                             }
-                            <span className='text-3xl p-4'>{video.likes?.length}</span>
+                            <span className='text-3xl'>{video.likes?.length}</span>
                         </div>
                     </div>
                     <div className='m-10 border-blue-600 mx-10 border-2 rounded-xl text-center'>

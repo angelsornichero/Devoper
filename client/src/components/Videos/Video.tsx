@@ -10,13 +10,16 @@ import useAuthorization from '../../hooks/useAuthorization'
 
 interface Prop {
   video: Video,
-  dashboard?: boolean
+  dashboard?: boolean,
+  reset: any,
+  setReset: any,
+  history?: boolean
 }
 
-export const VideoComponent = ({video, dashboard = false}: Prop) => {
+export const VideoComponent = ({video, dashboard = false, reset, setReset, history = false}: Prop) => {
     const { userId, jwt } = useAuthorization()
     const [user, setUser] = useState<string>('')
-
+    
 
     const loadUser = async () => {
       const data = await getUser(video.userId as string)
@@ -26,7 +29,7 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
     useEffect(() => {
       console.log('reset')
       loadUser()
-    })
+    }, [reset])
 
     const handleDelete = async () => {
       const data = await deleteVideo(video._id as string, jwt as string)
@@ -45,18 +48,25 @@ export const VideoComponent = ({video, dashboard = false}: Prop) => {
               {video.title}
             </h1>
           </Link>
-          <div className='flex justify-between mt-2 mx-6'>
-            <div className='flex justify-center gap-4'>
-              { 
-                jwt ? <Like jwt={jwt} userId={userId} video={video} /> : <AiFillHeart id={`like${video._id}`} className='text-4xl' />
-              }
-              
-              <span className='text-2xl sm:text-3xl'>{video.likes?.length}</span>
-            </div>
-            <div className='flex justify-center gap-4'>
-              <span className='text-2xl sm:text-3xl'>Comments: {video.comments?.length}</span>
-            </div>
-          </div>
+          {
+            history
+              ? <div></div>
+              : (
+                <div className='flex justify-between mt-2 mx-6'>
+                  <div className='flex justify-center gap-4'>
+                    { 
+                      jwt ? <Like reset={reset} setReset={setReset} jwt={jwt} userId={userId} video={video} /> : <AiFillHeart id={`like${video._id}`} className='text-4xl' />
+                    }
+                    
+                    <span className='text-2xl sm:text-3xl'>{video.likes?.length}</span>
+                  </div>
+                  <div className='flex justify-center gap-4'>
+                    <span className='text-2xl sm:text-3xl'>Comments: {video.comments?.length}</span>
+                  </div>
+                </div>
+              )
+          }
+          
           <div className='flex justify-between p-2 sm:p-6 text-xl '>
             <div>
               <span>{video.description}</span>
