@@ -3,10 +3,11 @@ import { getComments } from '../../services/VideoService'
 import { Comment } from '../../types/Comment.type'
 
 interface Props {
-    idVideo: string
+    idVideo: string,
+	reset: number
 }
 
-export const Comments = ({idVideo}: Props) => {
+export const Comments = ({idVideo, reset}: Props) => {
 	const [load, setLoad] = useState<boolean>(true)
 	const [comments, setComments] = useState<Comment[]>([])
 
@@ -16,8 +17,9 @@ export const Comments = ({idVideo}: Props) => {
 		setLoad(false)
 	}
 	useEffect(() => {
+		console.log(reset)
 		loadComments()
-	}, [])
+	}, [reset])
 
 	return (
 		<div>

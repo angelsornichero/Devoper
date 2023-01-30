@@ -14,6 +14,11 @@ export const UserDashboard = () => {
 		setVideos(data.videos)
 	}
 
+
+	const handleReset = () => {
+		setReset(reset + 1)
+	}
+
 	useEffect(() => {
 		getVideos()
 	}, [reset])
@@ -30,7 +35,7 @@ export const UserDashboard = () => {
 				{videos.map((video) => {
 					return (
 						<div className='m-10' key={video._id}>
-							<VideoComponent reset={reset} setReset={setReset} video={video} dashboard={true} />
+							<VideoComponent handleReset={handleReset} video={video} dashboard={true} />
 						</div>
 					)
 				})}

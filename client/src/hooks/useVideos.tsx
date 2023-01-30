@@ -15,18 +15,20 @@ const useVideos = ({ keyword }: Params) => {
 
 
 	const loadVideos = async () => {
-		if (videos.length === 0) {
-			const videosFounded = await getVideos(keyword)
-			setAllVideos(videosFounded.videos)
-			setVideos(videosFounded.videos.slice(page, page + 6))
-			setLoading(false)
-			return
-		}
-		setVideos(videos.concat(allVideos.slice(page, page + 6)))
+		const videosFounded = await getVideos(keyword)
+		console.log(videosFounded)
+		setAllVideos(videosFounded.videos)
+		setVideos(videosFounded.videos.slice(0, page + 4))
+		setLoading(false)
+		return
 	}
 	useEffect(() => {
 		loadVideos()
-	}, [reset, page])
+	}, [reset])
+
+	useEffect(() => {
+		setVideos(videos.concat(allVideos.slice(page, page + 4)))
+	}, [page])
 
 	const handleReset = () =>  {
 		setReset(reset + 1)

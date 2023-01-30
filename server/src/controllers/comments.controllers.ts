@@ -7,18 +7,12 @@ import User from '../models/User.js'
 export const getComments: RequestHandler = async (req, res) => {
     let commentList = []
     const { comments } = await Video.findOne({_id: req.params.id}) as any
-
     if (!comments) return error({statusCode: 404, message: 'There are not comments in this video'}, res)
-
     for (let i = 0; i < comments.length; i++) {
         const comment = comments[i]
         const { username } = await User.findById(comment.userId.toString()) as any
-        console.log(username)
-
-        commentList.push({id: comment._id.toString(), comment: comment.comment, username: username})
-        
+        commentList.push({id: comment._id.toString(), comment: comment.comment, username: username})        
     }
-
     res.json({success: true, comments: commentList})
 }
 

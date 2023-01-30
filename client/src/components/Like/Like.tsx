@@ -15,19 +15,16 @@ export const Like = ({video, jwt, userId, handleReset }: Props) => {
     
 
 	const loadLike = async () => {
-		const data = await giveLike(video?._id as string, jwt as string)
-		// console.log(data)
-      
+		await giveLike(video?._id as string, jwt as string)      
 		const likeBox = document.querySelector(`#like${video?._id}`)
 		likeBox?.classList.add('text-red-600')
 		likeBox?.classList.remove('text-black')
 		handleReset()
 	}
 	const loadDisLike = async (likeId: string) => {
-		const data = await deleteLike(video?._id as string, jwt as string, likeId)
+		await deleteLike(video?._id as string, jwt as string, likeId)
 		setLike(false)
 		const likeBox = document.querySelector(`#like${video?._id}`) 
-		console.log(likeBox?.classList)
 		likeBox?.classList.add('text-black')
 		handleReset()
 	}
@@ -62,6 +59,7 @@ export const Like = ({video, jwt, userId, handleReset }: Props) => {
 
 	useEffect(() => {
 		videoIsLiked()
+		console.log('reset')
 	})
    
 	return (

@@ -82,10 +82,10 @@ export const createVideo: RequestHandler = async (req, res) => {
 
 export const getVideo: RequestHandler = async (req, res) => {
     try {
-        const videoFound = await Video.findById(req.params.id)
+        const videoFound = await Video.findById(req.params.id) as any
         if (!videoFound) return error({statusCode: 204, message: `Any video with id: ${req.params.id} found`}, res)
-        console.log(videoFound.createdAt)
-        res.json({ success: true, video: videoFound })
+        const { username } = await User.findById(videoFound.userId.toString()) as any
+        res.json({ success: true, video: {...videoFound._doc, [videoFound._doc.username]: username }})
     } catch {
         error({statusCode: 404, message: 'No videos with that id'}, res)
     }

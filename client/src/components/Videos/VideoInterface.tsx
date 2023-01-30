@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react'
 import { Video } from '../../types/Video.type'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 import { getUser } from '../../services/UserService'
 import { getVideoById } from '../../services/VideoService'
@@ -10,11 +10,11 @@ import useAuthorization from '../../hooks/useAuthorization'
 import { CommentaryFrom } from '../Commentaries/CommentaryFrom'
 import useUserHistory from '../../hooks/useUserHistory'
 
+
 export const VideoInterface = () => {
 	const { userId, jwt } = useAuthorization()
 	const [video, setVideo] = useState<Video>()
 	const [error, setError] = useState<boolean>(false)
-	const [user, setUser] = useState<string>('')
 	const [reset, setReset] = useState<number>(0)
 	const { id } = useParams()
 	const { addVideoToHistory } = useUserHistory()
@@ -24,23 +24,17 @@ export const VideoInterface = () => {
 		const videoFound = await getVideoById(id as string)
 		if (!videoFound) return setError(true)
 		setVideo(videoFound.video)
-		addVideoToHistory(videoFound.video)   
-	}
-
-	const loadUserId = async () => {
-		const videoFound = await getVideoById(id as string)
-		if (!videoFound) return
-		const data = await getUser(videoFound.video.userId.toString())
-		setUser(data.username)
+		addVideoToHistory(videoFound.video) 
+		console.log(videoFound)  
 	}
 
 	const handleReset = () => {
+		console.log(reset)
 		setReset(reset + 1)
 	}
 
 	useEffect(() => {
 		loadVideo()
-		loadUserId()
 	}, [reset])
 
 	return (
@@ -48,9 +42,7 @@ export const VideoInterface = () => {
 			{
 				error 
 					? (
-						<div className='p-4 bg-red-600 rounded-lg'>
-							<h1>Error on load video, probably video doesnt exists</h1>
-						</div>
+						<Navigate to={'/404'} />
 					)
 					: <></>
 			}
@@ -63,7 +55,7 @@ export const VideoInterface = () => {
 								<ReactPlayer controls={false} width={'100%'} height={'100%'} className='' url={video.url} />
 							</div>
 							<div className='mx-16 flex justify-between bg-white rounded-xl'>
-								<span className='p-4 text-lg sm:text-3xl flex gap-4'>Video posted by:<p className='text-blue-600'> {user}</p></span>
+								<span className='p-4 text-lg sm:text-3xl flex gap-4'>Video posted by:<p className='text-blue-600'> {video.undefined}</p></span>
 								<div className='flex p-4 gap-2'>
 									{ 
 										jwt ? <Like handleReset={handleReset} jwt={jwt as string} video={video as Video} userId={userId as string} /> 
@@ -78,11 +70,11 @@ export const VideoInterface = () => {
 							{
 								jwt
 									? (
-										<CommentaryFrom userId={userId as string} jwt={jwt as string} id={id as string}  />
+										<CommentaryFrom handleReset={handleReset} userId={userId as string} jwt={jwt as string} id={id as string}  />
 									)
 									: <div></div>
 							}
-							<Comments idVideo={id as string}  />
+							<Comments reset={reset} idVideo={id as string}  />
 						</div>
 					)
 					:   <div></div>

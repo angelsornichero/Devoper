@@ -12,10 +12,11 @@ export default function Videos() {
 	const {isNearScreen} = useNearScreen({externalRef: loading ? null : externalRef, once: false})
 
 
-	const HandlePage = useCallback(debounce(() => {setPage(page + 6); console.log('next page')}, 20), [])
+	const HandlePage = useCallback(debounce(() => {setPage(page + 4); console.log('next page')}, 20), [])
 	
 	useEffect(() => {
 		if (isNearScreen) HandlePage()
+		// console.log(videos)
 	})
 
 	return (

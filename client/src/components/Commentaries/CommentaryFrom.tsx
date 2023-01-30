@@ -6,10 +6,11 @@ import { AiOutlineSend } from 'react-icons/ai'
 interface Params {
     userId: string, 
     jwt: string, 
-    id: string
+    id: string,
+	handleReset: any
 }
 
-export const CommentaryFrom = ({userId, jwt, id}: Params) => {
+export const CommentaryFrom = ({userId, jwt, id, handleReset}: Params) => {
 	const [sendComment, setSendComment] = useState<Comment>({comment: '', userId: userId})
 	const handleInputChange = (e: any) => {
 		setSendComment({...sendComment, [e.target.name]: e.target.value})
@@ -20,8 +21,7 @@ export const CommentaryFrom = ({userId, jwt, id}: Params) => {
 		console.log(sendComment.comment)
 		try {
 			const data = await createComment(sendComment.comment, jwt as string, id as string)
-			console.log(data)
-			window.location.reload()
+			handleReset()
 		}
 		catch {
 			return
@@ -29,10 +29,10 @@ export const CommentaryFrom = ({userId, jwt, id}: Params) => {
 	}
 	return (
 		<div>
-			<div className='bg-white flex sm:gap-4 md:rounded-2xl m-6 lg:mx-[400px] p-4 justify-center'>
+			<form className='bg-white flex sm:gap-4 md:rounded-2xl m-6 lg:mx-[400px] p-4 justify-center'>
 				<input className='bg-green-700 md:text-2xl text-white p-3 w-96 rounded-xl' type={'text'} name='comment' onChange={handleInputChange} placeholder='Write a comment' />
 				<button onClick={submitComment} className='text-4xl text-blue-600'><AiOutlineSend /></button>
-			</div>
+			</form>
 		</div>
 	)
 }

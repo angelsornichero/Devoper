@@ -9,9 +9,13 @@ export const History = () => {
 	const [videos, setVideos] = useState<Video[]>([])
 	useEffect(() => {
 		setVideos(getHistory())
+		console.log(getHistory())
 	}, [reset])
     
-  
+	const handleReset = () => {
+		setReset(reset + 1)
+	}
+
 	return (
 		<>
 			<h1 className='text-center text-8xl border-4 mx-[100px] my-[50px] text-white rounded-xl border-blue-600'>Historial of videos</h1>
@@ -20,7 +24,7 @@ export const History = () => {
 					videos.map((video) => {
 						return (
 							<div key={video._id}>
-								<VideoComponent history={true} reset={reset} setReset={setReset} video={video} />
+								<VideoComponent history={true} handleReset={handleReset} video={video} />
 							</div>
 						)
 					})

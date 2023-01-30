@@ -15,6 +15,7 @@ import * as jose from 'jose'
 import { VideoPage } from './pages/VideoPage'
 import { HistoryPage } from './pages/HistoryPage'
 import React from 'react'
+import NotFoundPage from './pages/404Page'
 
 function App() {
 	const [authenticated, setAuthorization] = useState<boolean>(false)
@@ -51,6 +52,7 @@ function App() {
 								<Route element={VideoPage()} path='/video/:id' />
 								<Route element={RegisterPage()} path='/register' />
 								<Route element={LoginPage()} path='/login' />
+								<Route element={NotFoundPage()} path='/404' />
 							</Routes>
 						</>
 					)
@@ -58,6 +60,7 @@ function App() {
 						<>
 							<NavBar />
 							<Routes>
+								<Route element={NotFoundPage()} path='/404' />
 								<Route element={HomePage()} path='/'/>
 								<Route element={HomePage()} path='/search/:search'/>
 								<Route element={VideoPage()} path='/video/:id' />
