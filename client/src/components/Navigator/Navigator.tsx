@@ -17,7 +17,7 @@ export const Navigator = () => {
 		e.preventDefault()
 		if (toSearch === '') return window.location.href = '/'
 		addLastKeyword(toSearch)
-		window.location.href = `/search/${toSearch}`
+		window.location.href = `/searches/search/${toSearch}`
 	}
 
 	return (

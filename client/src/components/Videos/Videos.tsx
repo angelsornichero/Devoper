@@ -17,7 +17,7 @@ export default function Videos() {
 	
 	useEffect(() => {
 		if (isNearScreen) HandlePage()
-		// console.log(videos)
+		console.log(search)
 	})
 
 	return (

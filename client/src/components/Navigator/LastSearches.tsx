@@ -30,7 +30,7 @@ export const LastSearches = () => {
 										index === 2 ? 'bg-yellow-500 px-8 py-4 rounded-full text-white hover:bg-white hover:text-yellow-500 border-2 border-yellow-500' : 
 											index === 3 ? 'bg-purple-700 px-8 py-4 rounded-full text-white hover:bg-white hover:text-purple-700 border-2 border-purple-700' : 
 												index === 4 ? 'bg-orange-500 px-8 py-4 rounded-full text-white hover:bg-white hover:text-orange-500 border-2 border-orange-500' : ''
-							} key={search} href={`/search/${search}`}>
+							} key={search} href={`/searches/search/${search}`}>
 								{search}
 							</a>
 						)

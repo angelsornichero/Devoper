@@ -6,13 +6,16 @@ import { Link } from 'react-router-dom'
 interface Props {
     dashboard: boolean,
     video: Video,
-    jwt: string
+    jwt: string,
+	handleReset: any
 }
 
-export const VideoFooter = ({ video, dashboard, jwt }: Props) => {
+export const VideoFooter = ({ video, dashboard, jwt, handleReset }: Props) => {
 	const handleDelete = async () => {
+		const modal = document.querySelector('#modal2') as any
 		const data = await deleteVideo(video._id as string, jwt as string)
-		window.location.reload()
+		handleReset()
+		modal.close()
 		console.log(data)
 	}
 

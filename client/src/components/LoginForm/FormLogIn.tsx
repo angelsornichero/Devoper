@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 export const FormLogIn = () => {
 	const [user, setUser] = useState<User>({username: '', password: ''})
 	const [cookies, setCookies, removeCookie] = useCookies(['sessionJWT'])
+	const [error, setError] = useState<boolean>(false)
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setUser({...user, [e.target.name]: e.target.value})
@@ -23,11 +24,17 @@ export const FormLogIn = () => {
 		}
 		catch (error){
 			console.log(error)
+			setError(true)
 		}
 	}
 
 	return (
 		<div className='mt-20 rounded-lg bg-slate-200'>
+			{
+				error 
+					? <h1 className='bg-red-700 p-4 text-xl'>Error, User or password incorrect</h1>
+					: <></>
+			}
 			<form className='text-center p-2 sm:p-12'>
 				<span className='text-4xl'>Log in</span>
 				<div className='m-6 flex justify-center'>

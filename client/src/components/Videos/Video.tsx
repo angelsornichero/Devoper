@@ -25,7 +25,7 @@ export const VideoComponent = ({video, dashboard = false, handleReset, history =
 						<VideoCommentsLike video={video} userId={userId} handleReset={handleReset} jwt={jwt as string} />
 					)
 			}
-			<VideoFooter jwt={jwt as string} video={video} dashboard={dashboard} />
+			<VideoFooter jwt={jwt as string} video={video} handleReset={handleReset} dashboard={dashboard} />
 		</div>
 	)
 }

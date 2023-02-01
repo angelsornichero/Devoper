@@ -16,6 +16,7 @@ import { VideoPage } from './pages/VideoPage'
 import { HistoryPage } from './pages/HistoryPage'
 import React from 'react'
 import NotFoundPage from './pages/404Page'
+import SearchPage from './pages/SearchPage'
 
 function App() {
 	const [authenticated, setAuthorization] = useState<boolean>(false)
@@ -48,11 +49,11 @@ function App() {
 							<NavBar />
 							<Routes>
 								<Route element={HomePage()} path='/'/>
-								<Route element={HomePage()} path='/search/:search'/>
 								<Route element={VideoPage()} path='/video/:id' />
 								<Route element={RegisterPage()} path='/register' />
 								<Route element={LoginPage()} path='/login' />
 								<Route element={NotFoundPage()} path='/404' />
+								<Route element={SearchPage()} path='/searches/search/:searches'/>
 							</Routes>
 						</>
 					)
@@ -60,9 +61,9 @@ function App() {
 						<>
 							<NavBar />
 							<Routes>
-								<Route element={NotFoundPage()} path='/404' />
+								<Route element={SearchPage()} path='/searches/search/:searches'/>
+								<Route element={NotFoundPage()} path='*' />
 								<Route element={HomePage()} path='/'/>
-								<Route element={HomePage()} path='/search/:search'/>
 								<Route element={VideoPage()} path='/video/:id' />
 								<Route element={VideoFormPage()} path='/create-video'  />
 								<Route element={RegisterPage()} path='/register' />
