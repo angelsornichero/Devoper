@@ -26,7 +26,7 @@ export const VideoFooter = ({ video, dashboard, jwt }: Props) => {
 		modal.close()
 	}
 	return (
-		<div className='flex justify-between p-2 sm:p-6 text-xl '>
+		<div className='flex justify-between p-2 lg:text-xl sm:p-6 '>
 			<div>
 				<span>{video.description}</span>
 			</div>
@@ -46,8 +46,8 @@ export const VideoFooter = ({ video, dashboard, jwt }: Props) => {
 									<h1>Are you sure of delete this video?</h1>
 								</div>
 								<div className='flex justify-center gap-6 m-6 '>
-									<button onClick={handleDelete} className='bg-red-600 p-4 rounded-lg'>Delete video</button>
-									<button onClick={closeModal} className='bg-blue-600 p-4 rounded-lg'>Close</button>
+									<button onClick={handleDelete} className='bg-red-600 lg:p-4 rounded-lg'>Delete video</button>
+									<button onClick={closeModal} className='bg-blue-600  lg:p-4 rounded-lg'>Close</button>
 								</div>
 									
 							</dialog>

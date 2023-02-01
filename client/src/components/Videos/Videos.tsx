@@ -22,7 +22,7 @@ export default function Videos() {
 
 	return (
 		<div>
-			<h1 className='text-center text-8xl border-4 mx-[100px] my-[50px] text-white rounded-xl border-blue-600'>{search ? `Trends of ${search}` : 'Trends'}</h1>
+			<h1 className='text-center text-5xl lg:text-8xl border-4 mx-[100px] my-[50px] text-white rounded-xl border-blue-600'>{search ? `Trends of ${search}` : 'Trends'}</h1>
 			<div className='flex flex-wrap mx-20 my-8 justify-around'>
 				{loading ? <Spinner /> : videos.map((video) => {
 					return (

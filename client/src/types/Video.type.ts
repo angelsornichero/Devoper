@@ -9,6 +9,6 @@ export interface Video {
     comments?: Array<any>,
     likes?: Array<any>,
     area: string,
-    undefined: string
+    undefined?: string
   }
   

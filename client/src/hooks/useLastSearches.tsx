@@ -1,6 +1,6 @@
 
-const useLastSearches = (keyword: string) => {
-	const addLastKeyword = () => {
+const useLastSearches = () => {
+	const addLastKeyword = (keyword: string) => {
 		if (keyword === '-') return
 		if (!localStorage.getItem('lastSearches')) return localStorage.setItem('lastSearches', JSON.stringify([keyword]))
 		const lastSearches = JSON.parse(localStorage.getItem('lastSearches') as string)
@@ -8,11 +8,9 @@ const useLastSearches = (keyword: string) => {
 		localStorage.setItem('lastSearches', JSON.stringify(lastSearches))
 	}
 
-	const getLastKeywords = () =>  {
-		return JSON.parse(localStorage.getItem('lastSearches') as string)
-	}
+	
 
-	return { addLastKeyword, getLastKeywords }
+	return { addLastKeyword }
 }
 
 export default useLastSearches

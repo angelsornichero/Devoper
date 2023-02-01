@@ -18,7 +18,7 @@ export const History = () => {
 
 	return (
 		<>
-			<h1 className='text-center text-8xl border-4 mx-[100px] my-[50px] text-white rounded-xl border-blue-600'>Historial of videos</h1>
+			<h1 className='text-center text-4xl lg:text-8xl border-4 mx-[100px] my-[50px] text-white rounded-xl border-blue-600'>Historial of videos</h1>
 			<div className='flex flex-wrap mx-20 my-8 justify-around'>
 				{
 					videos.map((video) => {
